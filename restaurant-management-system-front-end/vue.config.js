@@ -2,6 +2,13 @@ const path = require('path')
 
 module.exports = {
   publicPath: process.env.VUE_APP_BASE_API,
+  // devServer: {
+  //   proxy: {
+  //     '^/api/dbcourse': {
+  //       target: '',
+  //     }
+  //   }
+  // },
   chainWebpack: (config) => {
     config
       .plugin('html')
