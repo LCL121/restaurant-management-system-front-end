@@ -1,22 +1,29 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
-import Home from '@/views/home/Home.vue'
-import Student from '@/views/student/Student.vue'
+import Home from '@/layout/home/Home.vue'
 
 const constantRoutes: Array<RouteRecordRaw> = [
   {
     path: '/',
     name: 'Home',
-    component: Home
-  },
-  {
-    path: '/signin',
-    name: 'SignIn',
-    component: () => import(/* webpackChunkName: "signin" */ '@/views/signin/SignIn.vue')
-  },
-  {
-    path: '/signup',
-    name: 'SignUp',
-    component: () => import(/* webpackChunkName: "signup" */ '@/views/signup/SignUp.vue')
+    component: Home,
+    redirect: {
+      name: 'SignIn',
+      query: {
+        role: 'student'
+      }
+    },
+    children: [
+      {
+        path: 'signin',
+        name: 'SignIn',
+        component: () => import(/* webpackChunkName: "signin" */ '@/views/signin/SignIn.vue')
+      },
+      {
+        path: 'signup',
+        name: 'SignUp',
+        component: () => import(/* webpackChunkName: "signup" */ '@/views/signup/SignUp.vue')
+      }
+    ]
   },
   {
     path: '/about',

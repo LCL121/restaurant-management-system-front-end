@@ -1,9 +1,9 @@
 import axios, { AxiosResponse } from 'axios'
 import { RouteRecordRaw } from 'vue-router'
 import router from './router/index'
-import Student from '@/views/student/Student.vue'
-import Business from '@/views/business/Business.vue'
-import Admin from '@/views/admin/Admin.vue'
+import Student from '@/layout/student/Student.vue'
+import Business from '@/layout/business/Business.vue'
+import Admin from '@/layout/admin/Admin.vue'
 
 const studentRoute: RouteRecordRaw = {
   path: '/student',
@@ -95,9 +95,9 @@ router.beforeEach(async (to, from, next) => {
           router.addRoute(adminRoute)
           break
       }
-      next({ path: to.path })
+      next({ ...to })
     } else {
-      next({ path: '/' })
+      next({ ...to, path: '/' })
     }
   } else {
     next()
