@@ -2,11 +2,19 @@
   <div class="home">
     <h1>{{key}} home</h1>
     <div class="main">
-      <nav v-if="key !== 'admin'">
-        <router-link to="/signin?role=student">学生</router-link>
-        <router-link to="/signin?role=business">商家</router-link>
-      </nav>
       <div class="center">
+        <nav v-if="key !== 'admin'">
+          <router-link
+            to="/signin?role=student"
+            :class="{selected: index === 0}"
+            @click="changeSeleted(0)"
+          >学生</router-link>
+          <router-link
+            to="/signin?role=business"
+            :class="{selected: index === 1}"
+            @click="changeSeleted(1)"
+          >商家</router-link>
+        </nav>
         <router-view :key="key" />
       </div>
     </div>
@@ -14,10 +22,21 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, ref } from 'vue'
 
 export default defineComponent({
   name: 'Home',
+  setup () {
+    const index = ref(0)
+    const changeSeleted = (idx: number) => {
+      index.value = idx
+    }
+
+    return {
+      index,
+      changeSeleted
+    }
+  },
   computed: {
     key () {
       return this.$route.query.role
@@ -27,12 +46,19 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
-@import '@/style/index.scss';
+@import "@/style/index.scss";
+
+$homeCenter: px2rem(380);
+
+.selected {
+  border-bottom: 2px black solid;
+}
 
 .home {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  background: gray;
 
   h1 {
     margin: 0;
@@ -47,7 +73,24 @@ export default defineComponent({
     justify-content: center;
     align-items: center;
     .center {
+      height: $homeCenter;
+      width: $homeCenter;
+      padding: px2rem(25);
+      box-sizing: border-box;
+      background: hsla(0, 0%, 100%, 0.7);
 
+      nav {
+        display: flex;
+        margin-bottom: px2rem(20);
+
+        a {
+          flex: 1;
+          margin: 0 px2rem(20);
+          font-weight: 700;
+          box-sizing: border-box;
+          @include textCenter(px2rem(40));
+        }
+      }
     }
   }
 }
