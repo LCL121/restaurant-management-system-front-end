@@ -5,15 +5,15 @@
       <div class="center">
         <nav v-if="key !== 'admin'">
           <router-link
-            to="/signin?role=student"
+            :to="`/signin?role=${key}`"
             :class="{selected: index === 0}"
             @click="changeSeleted(0)"
-          >学生</router-link>
+          >登录</router-link>
           <router-link
-            to="/signin?role=business"
+            :to="`/signup?role=${key}`"
             :class="{selected: index === 1}"
             @click="changeSeleted(1)"
-          >商家</router-link>
+          >注册</router-link>
         </nav>
         <router-view :key="key" />
       </div>

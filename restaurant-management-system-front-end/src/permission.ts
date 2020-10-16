@@ -83,6 +83,7 @@ router.beforeEach(async (to, from, next) => {
   if (!res) {
     res = await axios.get('/api/dbcourse/role.json')
     if (res.status === 200) {
+      console.log('权限获取成功!')
       const role = res.data.data.role
       switch (role) {
         case 'student':
@@ -105,5 +106,5 @@ router.beforeEach(async (to, from, next) => {
 })
 
 router.afterEach(() => {
-  console.log(router.getRoutes())
+  console.log('路由跳转成功!')
 })
