@@ -3,7 +3,7 @@
     <h1>{{key}} home</h1>
     <div class="main">
       <div class="center">
-        <nav v-if="key !== 'admin'">
+        <nav v-if="key !== ADMIN_ROLE">
           <router-link
             :to="`/signin?role=${key}`"
             :class="{selected: index === 0}"
@@ -23,6 +23,7 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
+import { ADMIN_ROLE } from '@/utils/role'
 
 export default defineComponent({
   name: 'Home',
@@ -34,7 +35,8 @@ export default defineComponent({
 
     return {
       index,
-      changeSeleted
+      changeSeleted,
+      ADMIN_ROLE
     }
   },
   computed: {

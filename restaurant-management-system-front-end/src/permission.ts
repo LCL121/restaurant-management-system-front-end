@@ -5,6 +5,8 @@ import Student from '@/layout/student/Student.vue'
 import Business from '@/layout/business/Business.vue'
 import Admin from '@/layout/admin/Admin.vue'
 
+import { STUDENT_ROLE, BUSINESS_ROLE, ADMIN_ROLE } from '@/utils/role'
+
 const studentRoute: RouteRecordRaw = {
   path: '/student',
   name: 'Student',
@@ -86,13 +88,13 @@ router.beforeEach(async (to, from, next) => {
       console.log('权限获取成功!')
       const role = res.data.data.role
       switch (role) {
-        case 'student':
+        case STUDENT_ROLE:
           router.addRoute(studentRoute)
           break
-        case 'business':
+        case BUSINESS_ROLE:
           router.addRoute(businessRoute)
           break
-        case 'admin':
+        case ADMIN_ROLE:
           router.addRoute(adminRoute)
           break
       }
@@ -105,6 +107,6 @@ router.beforeEach(async (to, from, next) => {
   }
 })
 
-router.afterEach(() => {
-  console.log('路由跳转成功!')
+router.afterEach((to) => {
+  console.log(`${to.fullPath} 路由跳转成功!`)
 })

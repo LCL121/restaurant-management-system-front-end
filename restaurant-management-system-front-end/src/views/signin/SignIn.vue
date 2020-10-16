@@ -31,10 +31,10 @@
       >
     </div>
     <div class="fm-button">
-      <button @click="signin">登录</button>
+      <button @click="signIn">登录</button>
     </div>
     <router-link
-      v-if="role === 'student'"
+      v-if="role === STUDENT_ROLE"
       to="/signin?role=business"
     >商家登录</router-link>
     <router-link
@@ -45,31 +45,11 @@
 </template>
 
 <script lang="ts">
-import {
-  defineComponent,
-  ref,
-  Ref,
-  reactive,
-  toRefs,
-  computed,
-  watch,
-  watchEffect,
-  onMounted
-} from 'vue'
-import { RouteLocationNormalized, useRoute, useRouter } from 'vue-router'
-
-interface Inputs {
-  accountNumberId: string;
-  type: string;
-  pattern: string;
-  placeholder: string;
-  accountNumber: string;
-  password: string;
-}
-
-interface InputDOMStatus {
-  (): boolean;
-}
+import { defineComponent, toRefs, computed, watchEffect } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { STUDENT_ROLE, BUSINESS_ROLE, ADMIN_ROLE } from '@/utils/role'
+import { Inputs, getAccountInputInfo } from './ts/initInputs'
+import { accountNumberDOM, passwordDOM, operateSignIn } from './ts/operateInputs'
 
 export default defineComponent({
   name: 'SignIn',
@@ -77,44 +57,27 @@ export default defineComponent({
     const route = useRoute()
     const router = useRouter()
 
-    // const getAccountInputInfo = (role: string) => {
-    //   if (role === )
-    // }
-
-    const inputs: Inputs = reactive({
-      accountNumberId: `${route.query.role}Id`,
-      type: 'text',
-      pattern: '',
-      placeholder: '学号',
-      accountNumber: '201801001116',
-      password: '123abcABC'
+    const role = computed(() => {
+      const role = route.query.role as string | null
+      return role
     })
 
-    const role = computed(() => route.query.role)
+    // 初始化所有的input 框
+    const inputs: Inputs = getAccountInputInfo(role.value)
 
-    const accountNumberDOM = ref<HTMLInputElement>()
-    const passwordDOM = ref<HTMLInputElement>()
-
-    const studentNumberStatus: InputDOMStatus = () =>
-      Boolean(accountNumberDOM.value && accountNumberDOM.value.validity.valid)
-    const passwordStatus: InputDOMStatus = () =>
-      Boolean(passwordDOM.value && passwordDOM.value.validity.valid)
-
-    const signin = (e: Event) => {
-      if (studentNumberStatus() && passwordStatus()) {
-        console.log('登录表单提交成功!')
-        router.push('/student/student-home')
-      }
+    const signIn = () => {
+      operateSignIn(router, role.value)
     }
 
+    // 进一步登录页面权限控制
     watchEffect(() => {
       if (route.fullPath.includes('/signin')) {
         const { role, key } = route.query
         if (
-          (role !== 'student' && role !== 'business' && role !== 'admin') ||
-          (role === 'admin' && key !== '2000')
+          (role !== STUDENT_ROLE && role !== BUSINESS_ROLE && role !== ADMIN_ROLE) ||
+          (role === ADMIN_ROLE && key !== '2000')
         ) {
-          router.push({ name: 'SignIn', query: { role: 'student' } })
+          router.push({ name: 'SignIn', query: { role: STUDENT_ROLE } })
         }
       }
     })
@@ -124,7 +87,8 @@ export default defineComponent({
       role,
       accountNumberDOM,
       passwordDOM,
-      signin
+      signIn,
+      STUDENT_ROLE
     }
   }
 })

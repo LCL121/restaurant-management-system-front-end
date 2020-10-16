@@ -1,6 +1,8 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
 import Home from '@/layout/home/Home.vue'
 
+import { STUDENT_ROLE } from '@/utils/role'
+
 const constantRoutes: Array<RouteRecordRaw> = [
   {
     path: '/',
@@ -9,7 +11,7 @@ const constantRoutes: Array<RouteRecordRaw> = [
     redirect: {
       name: 'SignIn',
       query: {
-        role: 'student'
+        role: STUDENT_ROLE
       }
     },
     children: [

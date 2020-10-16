@@ -8,6 +8,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import { RouteLocationNormalized } from 'vue-router'
+import { STUDENT_ROLE, BUSINESS_ROLE } from '@/utils/role'
 
 export default defineComponent({
   name: 'SignUp',
@@ -17,17 +18,17 @@ export default defineComponent({
     }
   },
   watch: {
-    $route (to: RouteLocationNormalized, from: RouteLocationNormalized) {
-      const { role, key } = to.query
-      if (role !== 'student' && role !== 'business') {
-        this.$router.push({ name: 'SignUp', query: { role: 'student' } })
+    $route (to: RouteLocationNormalized) {
+      const { role } = to.query
+      if (role !== STUDENT_ROLE && role !== BUSINESS_ROLE) {
+        this.$router.push({ name: 'SignUp', query: { role: STUDENT_ROLE } })
       }
     }
   },
   beforeRouteEnter (to, from, next) {
-    const { role, key } = to.query
-    if (role !== 'student' && role !== 'business') {
-      next({ name: 'SignUp', query: { role: 'student' } })
+    const { role } = to.query
+    if (role !== STUDENT_ROLE && role !== BUSINESS_ROLE) {
+      next({ name: 'SignUp', query: { role: STUDENT_ROLE } })
     }
     next()
   }
