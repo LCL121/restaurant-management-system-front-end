@@ -1,47 +1,52 @@
 <template>
   <div class="home">
-    <h1>{{key}} home</h1>
+    <h1>{{role}} home</h1>
     <div class="main">
       <div class="center">
-        <nav v-if="key !== ADMIN_ROLE">
+        <nav v-if="role !== ADMIN_ROLE">
           <router-link
-            :to="`/signin?role=${key}`"
+            :to="`/signin?role=${role}`"
             :class="{selected: index === 0}"
-            @click="changeSeleted(0)"
           >登录</router-link>
           <router-link
-            :to="`/signup?role=${key}`"
+            :to="`/signup?role=${role}`"
             :class="{selected: index === 1}"
-            @click="changeSeleted(1)"
           >注册</router-link>
         </nav>
-        <router-view :key="key" />
+        <router-view :key="role" />
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, computed } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import { ADMIN_ROLE } from '@/utils/role'
 
 export default defineComponent({
   name: 'Home',
   setup () {
-    const index = ref(0)
-    const changeSeleted = (idx: number) => {
-      index.value = idx
-    }
+    const route = useRoute()
+
+    const role = computed(() => {
+      const role = route.query.role as string | null
+      return role
+    })
+
+    const index = computed(() => {
+      const layout = route.path
+      if (layout === '/signin') {
+        return 0
+      } else {
+        return 1
+      }
+    })
 
     return {
       index,
-      changeSeleted,
-      ADMIN_ROLE
-    }
-  },
-  computed: {
-    key () {
-      return this.$route.query.role
+      ADMIN_ROLE,
+      role
     }
   }
 })
