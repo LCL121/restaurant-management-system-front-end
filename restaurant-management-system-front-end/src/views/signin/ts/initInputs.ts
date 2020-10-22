@@ -23,8 +23,8 @@ export const getAccountInputInfo = (role: string | null) => {
   originInputs.accountNumberId = `${role}Id`
   if (role === STUDENT_ROLE) {
     originInputs.type = 'text'
-    originInputs.pattern = '^\\d{12}$'
-    originInputs.placeholder = '学号'
+    originInputs.pattern = '^(\\d{12})|([a-zA-Z0-9]+@[a-zA-Z0-9]{1,5}\\.[a-zA-Z0-9]{1,5})$'
+    originInputs.placeholder = '学号/邮箱'
   } else if (role === BUSINESS_ROLE) {
     originInputs.type = 'email'
     originInputs.pattern = undefined

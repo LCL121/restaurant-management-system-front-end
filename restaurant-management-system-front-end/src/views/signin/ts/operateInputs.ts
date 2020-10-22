@@ -12,9 +12,9 @@ export const passwordDOM = ref<HTMLInputElement>()
 
 // 获取input 框的valid 状态
 const accountNumbeStatus: InputDOMStatus = () =>
-  Boolean(accountNumberDOM.value && accountNumberDOM.value.validity.valid)
+  Boolean(accountNumberDOM.value?.validity.valid)
 const passwordStatus: InputDOMStatus = () =>
-  Boolean(passwordDOM.value && passwordDOM.value.validity.valid)
+  Boolean(passwordDOM.value?.validity.valid)
 
 // 登录
 export const operateSignIn: (router: Router, role: string | null) => void =

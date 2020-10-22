@@ -3,51 +3,40 @@
     @submit.prevent=""
     class="sign-up"
   >
-    <div class="fm-input">
-      <label :for="accountNumberId"></label>
+    <div
+      class="fm-input"
+      v-for="(item, index) in data"
+      :key="index"
+      :class="{'code-input': item.id === 'codeId'}"
+    >
+      <label :for="item.id"></label>
       <input
-        :type="type"
-        :id="accountNumberId"
-        :placeholder="placeholder"
-        :pattern="pattern"
+        :type="item.type"
+        :id="item.id"
+        :placeholder="item.placeholder"
+        :pattern="item.pattern"
         autocomplete
         required
-        ref="accountNumberDOM"
-        v-model="accountNumber"
-        v-focus
+        :ref="item.refDom"
+        v-model="item.value"
       >
-    </div>
-    <div class="fm-input">
-      <label for="password"></label>
-      <input
-        type="password"
-        id="password"
-        placeholder="密码 8-16位，包含大小写字母、数字"
-        pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[^]{8,16}$"
-        required
-        ref="passwordDOM"
-        autocomplete
-        v-model="password"
-      >
+      <button
+        v-if="item.id === 'codeId'"
+        class="code-button"
+      >获取验证码</button>
     </div>
     <div class="fm-button">
       <button @click="signUp">注册</button>
     </div>
-    <router-link
-      v-if="role === STUDENT_ROLE"
-      to="/signup?role=business"
-    >商家注册</router-link>
-    <router-link
-      v-else
-      to="/signup?role=student"
-    >学生注册</router-link>
   </form>
 </template>
 
 <script lang="ts">
-import { defineComponent, watchEffect, computed } from 'vue'
+import { defineComponent, watchEffect, computed, reactive } from 'vue'
 import { RouteLocationNormalized, useRoute, useRouter } from 'vue-router'
 import { STUDENT_ROLE, BUSINESS_ROLE } from '@/utils/role'
+import { data } from './ts/initInputs'
+import { emailDOM, passwordDOM, confirmDOM, codeDOM, operateSignUp } from './ts/operateInputs'
 
 export default defineComponent({
   name: 'SignUp',
@@ -61,6 +50,10 @@ export default defineComponent({
       return role
     })
 
+    const signUp = () => {
+      operateSignUp(router, role.value, data)
+    }
+
     // 进一步登录页面权限控制
     watchEffect(() => {
       if (route.fullPath.includes('/signup')) {
@@ -73,13 +66,21 @@ export default defineComponent({
 
     return {
       role,
-      STUDENT_ROLE
+      STUDENT_ROLE,
+      data,
+      signUp,
+      emailDOM,
+      passwordDOM,
+      confirmDOM,
+      codeDOM
     }
   }
 })
 </script>
 
 <style scoped lang="scss">
+@import "@/style/index.scss";
+
 $fontColorA: #6c6c6c;
 
 .sign-up {
@@ -88,6 +89,19 @@ $fontColorA: #6c6c6c;
     margin-right: 10%;
     color: $fontColorA;
     font-size: 14px;
+  }
+
+  .code-input {
+    .code-button {
+      position: absolute;
+      @include textCenter(px2rem(38));
+      transform: translateX(-120%);
+      background: #f9f9f9;
+      top: px2rem(1);
+      font-size: 13px;
+      color: #6c6c6c;
+      cursor: pointer;
+    }
   }
 }
 </style>
