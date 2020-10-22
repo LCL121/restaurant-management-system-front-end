@@ -23,7 +23,8 @@
       <button
         v-if="item.id === 'codeId'"
         class="code-button"
-      >获取验证码</button>
+        @click="sendCode"
+      >{{codeButtonText}}</button>
     </div>
     <div class="fm-button">
       <button @click="signUp">注册</button>
@@ -36,7 +37,15 @@ import { defineComponent, watchEffect, computed, reactive } from 'vue'
 import { RouteLocationNormalized, useRoute, useRouter } from 'vue-router'
 import { STUDENT_ROLE, BUSINESS_ROLE } from '@/utils/role'
 import { data } from './ts/initInputs'
-import { emailDOM, passwordDOM, confirmDOM, codeDOM, operateSignUp } from './ts/operateInputs'
+import {
+  emailDOM,
+  passwordDOM,
+  confirmDOM,
+  codeDOM,
+  operateSendCode,
+  operateSignUp,
+  codeButtonText
+} from './ts/operateInputs'
 
 export default defineComponent({
   name: 'SignUp',
@@ -49,6 +58,10 @@ export default defineComponent({
       console.log(role === STUDENT_ROLE)
       return role
     })
+
+    const sendCode = () => {
+      operateSendCode(data[0])
+    }
 
     const signUp = () => {
       operateSignUp(router, role.value, data)
@@ -72,7 +85,9 @@ export default defineComponent({
       emailDOM,
       passwordDOM,
       confirmDOM,
-      codeDOM
+      codeDOM,
+      sendCode,
+      codeButtonText
     }
   }
 })
