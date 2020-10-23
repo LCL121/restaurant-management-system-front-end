@@ -1,0 +1,104 @@
+@import "@/style/index.scss";
+
+ul li {
+  position: absolute;
+  border: px2rem(1) solid #fff;
+  width: px2rem(30);
+  height: px2rem(30);
+  list-style: none;
+  opacity: 0;
+  background: #fff;
+}
+
+.square {
+  height: 0;
+  width: 0;
+}
+
+.square li {
+  animation: square 10s linear infinite;
+}
+
+.square li:nth-child(1) {
+  top: 50%;
+  left: 50%;
+}
+
+.square li:nth-child(2) {
+  top: px2rem(75);
+  left: px2rem(75);
+  animation-delay: 2s;
+}
+
+.square li:nth-child(3) {
+  top: px2rem(75);
+  right: px2rem(75);
+  animation-delay: 4s;
+}
+
+
+.square li:nth-child(4) {
+  bottom: px2rem(75);
+  right: px2rem(75);
+  animation-delay: 6s;
+}
+
+.square li:nth-child(5) {
+  bottom: px2rem(75);
+  left: px2rem(75);
+  animation-delay: 8s;
+}
+
+@keyframes square {
+  0% {
+    transform: scale(0) rotateY(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(5) rotateY(1800deg);
+    opacity: 0;
+  }
+}
+
+.circle {
+  height: 0;
+  width: 0;
+}
+
+.circle li {
+  bottom: 0;
+  left: 15vw;
+  border-radius: 50%;
+  animation: circle 10s linear infinite;
+}
+
+.circle li:nth-child(2) {
+  left: 30vw;
+  animation-delay: 2s;
+}
+
+.circle li:nth-child(3) {
+  left: 45vw;
+  animation-delay: 4s;
+}
+
+.circle li:nth-child(4) {
+  left: 60vw;
+  animation-delay: 6s;
+}
+
+.circle li:nth-child(5) {
+  left: 75vw;
+  animation-delay: 8s;
+}
+
+@keyframes circle {
+  0% {
+    transform: scale(0)  translate3d(0, 0, 0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(5) translate3d(0, -50vh, 0);
+    opacity: 0;
+  }
+}

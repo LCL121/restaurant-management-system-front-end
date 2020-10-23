@@ -16,6 +16,22 @@
         <router-view :key="role" />
       </div>
     </div>
+    <div class="square">
+      <ul>
+        <li
+          v-for="i in 5"
+          :key="i"
+        ></li>
+      </ul>
+    </div>
+    <div class="circle">
+      <ul>
+        <li
+          v-for="i in 5"
+          :key="i"
+        ></li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -54,6 +70,7 @@ export default defineComponent({
 
 <style scoped lang="scss">
 @import "@/style/index.scss";
+@import "./style/animation.scss";
 
 $homeCenter: px2rem(380);
 
@@ -65,13 +82,15 @@ $homeCenter: px2rem(380);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background: gray;
+  background-image: linear-gradient(#ff5722, #ffc107);
 
   h1 {
+    color: #fff;
     margin: 0;
-    padding-top: px2rem(20);
+    padding-top: px2rem(40);
     cursor: default;
-    @include textCenter(px2rem(60));
+    font-size: px2rem(60);
+    @include textCenter(px2rem(80));
   }
 
   .main {
@@ -84,7 +103,7 @@ $homeCenter: px2rem(380);
       width: $homeCenter;
       padding: px2rem(25);
       box-sizing: border-box;
-      background: hsla(0, 0%, 100%, 0.7);
+      background: hsla(0, 0%, 100%, 0.8);
 
       nav {
         display: flex;
