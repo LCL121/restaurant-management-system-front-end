@@ -31,15 +31,6 @@ const constantRoutes: Array<RouteRecordRaw> = [
     path: '/about',
     name: 'About',
     component: () => import(/* webpackChunkName: "about" */ '@/views/about/About.vue')
-  },
-  {
-    path: '/404',
-    name: '404',
-    component: () => import(/* webpackChunkName: "404" */ '@/views/error-pages/404.vue')
-  },
-  {
-    path: '/:pathMatch(.*)*',
-    redirect: '/404'
   }
 ]
 

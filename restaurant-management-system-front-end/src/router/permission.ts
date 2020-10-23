@@ -1,13 +1,14 @@
 import axios, { AxiosResponse } from 'axios'
 import { RouteRecordRaw } from 'vue-router'
-import router from './router/index'
+import router from './index'
+import store from '@/store'
 import Student from '@/layout/student/Student.vue'
 import Business from '@/layout/business/Business.vue'
 import Admin from '@/layout/admin/Admin.vue'
 
 import { STUDENT_ROLE, BUSINESS_ROLE, ADMIN_ROLE } from '@/utils/role'
 
-const studentRoute: RouteRecordRaw = {
+export const studentRoute: RouteRecordRaw = {
   path: '/student',
   name: 'Student',
   component: Student,
@@ -41,7 +42,7 @@ const studentRoute: RouteRecordRaw = {
   ]
 }
 
-const businessRoute: RouteRecordRaw = {
+export const businessRoute: RouteRecordRaw = {
   path: '/business',
   name: 'Business',
   component: Business,
@@ -60,7 +61,7 @@ const businessRoute: RouteRecordRaw = {
   ]
 }
 
-const adminRoute: RouteRecordRaw = {
+export const adminRoute: RouteRecordRaw = {
   path: '/admin',
   name: 'Admin',
   component: Admin,
@@ -79,13 +80,24 @@ const adminRoute: RouteRecordRaw = {
   ]
 }
 
+const other: Array<RouteRecordRaw> = [
+  {
+    path: '/404',
+    name: '404',
+    component: () => import(/* webpackChunkName: "404" */ '@/views/error-pages/404.vue')
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    redirect: '/404'
+  }
+]
+
 let res: AxiosResponse
 
 router.beforeEach(async (to, from, next) => {
   if (!res) {
-    res = await axios.get('/api/dbcourse/role.json')
+    res = await store.dispatch('role/getStudentInfo')
     if (res.status === 200) {
-      console.log('权限获取成功!')
       const role = res.data.data.role
       switch (role) {
         case STUDENT_ROLE:
@@ -98,6 +110,9 @@ router.beforeEach(async (to, from, next) => {
           router.addRoute(adminRoute)
           break
       }
+      other.forEach(item => {
+        router.addRoute(item)
+      })
       next({ ...to })
     } else {
       next({ ...to, path: '/' })
@@ -108,5 +123,6 @@ router.beforeEach(async (to, from, next) => {
 })
 
 router.afterEach((to) => {
+  console.log(router.getRoutes())
   console.log(`${to.fullPath} 路由跳转成功!`)
 })
