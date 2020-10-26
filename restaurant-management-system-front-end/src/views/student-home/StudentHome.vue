@@ -1,6 +1,61 @@
 <template>
   <div class="student-home">
-    student home
+    <p>student home</p>
+    <p>student home</p>
+    <p>student home</p>
+    <p>student home</p>
+    <p>student home</p>
+    <p>student home</p>
+    <p>student home</p>
+    <p>student home</p>
+    <p>student home</p>
+    <p>student home</p>
+    <p>student home</p>
+    <p>student home</p>
+    <p>student home</p>
+    <p>student home</p>
+    <p>student home</p>
+    <p>student home</p>
+    <p>student home</p>
+    <p>student home</p>
+    <p>student home</p>
+    <p>student home</p>
+    <p>student home</p>
+    <p>student home</p>
+    <p>student home</p>
+    <p>student home</p>
+    <p>student home</p>
+    <p>student home</p>
+    <p>student home</p>
+    <p>student home</p>
+    <p>student home</p>
+    <p>student home</p>
+    <p>student home</p>
+    <p>student home</p>
+    <p>student home</p>
+    <p>student home</p>
+    <p>student home</p>
+    <p>student home</p>
+    <p>student home</p>
+    <p>student home</p>
+    <p>student home</p>
+    <p>student home</p>
+    <p>student home</p>
+    <p>student home</p>
+    <p>student home</p>
+    <p>student home</p>
+    <p>student home</p>
+    <p>student home</p>
+    <p>student home</p>
+    <p>student home</p>
+    <p>student home</p>
+    <p>student home</p>
+    <p>student home</p>
+    <p>student home</p>
+    <p>student home</p>
+    <p>student home</p>
+    <p>student home</p>
+    <p>student home</p>
   </div>
 </template>
 

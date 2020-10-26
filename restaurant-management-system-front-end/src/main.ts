@@ -4,6 +4,7 @@ import './registerServiceWorker'
 import router from './router'
 import store from './store'
 
+import '@/assets/icon/iconfont.js'
 import './router/permission'
 import focus from '@/directive/focus'
 
