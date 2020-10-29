@@ -1,8 +1,8 @@
 <template>
-  <div class="home">
+  <div class="home" ref="homeDOM">
     <h1>{{role}} home</h1>
     <div class="main">
-      <div class="center">
+      <div class="center" @mousemove.stop="">
         <nav v-if="role !== ADMIN_ROLE">
           <router-link
             :to="`/signin?role=${role}`"
@@ -25,7 +25,7 @@
       </ul>
     </div>
     <div class="circle">
-      <ul>
+      <ul ref="circleULDOM">
         <li
           v-for="i in 5"
           :key="i"
@@ -36,9 +36,14 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, computed } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { defineComponent, ref, computed, onMounted } from 'vue'
+import { useRoute, useRouter, LocationQuery } from 'vue-router'
 import { ADMIN_ROLE } from '@/utils/role'
+import { homeDOM, circleULDOM, homeDOMEvent } from './ts/createBubble'
+
+// type MyLocationQuery = {
+//   role: string;
+// } & LocationQuery
 
 export default defineComponent({
   name: 'Home',
@@ -59,10 +64,23 @@ export default defineComponent({
       }
     })
 
+    onMounted(() => {
+      if (document.documentElement.clientWidth > 500) {
+        if (circleULDOM.value?.animate) {
+          console.log('Your browser support Element.animate()')
+          homeDOMEvent()
+        } else {
+          console.log('Your browser doesn\'t support Element.animate()')
+        }
+      }
+    })
+
     return {
       index,
       ADMIN_ROLE,
-      role
+      role,
+      homeDOM,
+      circleULDOM
     }
   }
 })
@@ -79,6 +97,7 @@ $homeCenter: px2rem(380);
 }
 
 .home {
+  overflow: hidden;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -104,6 +123,7 @@ $homeCenter: px2rem(380);
       padding: px2rem(25);
       box-sizing: border-box;
       background: hsla(0, 0%, 100%, 0.8);
+      z-index: 100;
 
       nav {
         display: flex;
