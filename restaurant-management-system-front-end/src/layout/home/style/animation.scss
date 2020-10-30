@@ -54,6 +54,7 @@ ul li {
     transform: scale3d(0, 0, 0) rotate3d(0, 0, 0, 0deg);
     opacity: 1;
   }
+
   100% {
     transform: scale3d(5, 5, 5) rotate3d(0, 1, 0, 1800deg);
     opacity: 0;
@@ -94,9 +95,35 @@ ul li {
 
 @keyframes circle {
   0% {
-    transform: scale3d(0, 0, 0)  translate3d(0, 0, 0);
+    transform: scale3d(0, 0, 0) translate3d(0, 0, 0);
     opacity: 1;
   }
+
+  100% {
+    transform: scale3d(5, 5, 5) translate3d(0, -50vh, 0);
+    opacity: 0;
+  }
+}
+
+.bubble {
+  background-color: #fff;
+  height: px2rem(30);
+  width: px2rem(30);
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0;
+}
+
+.bubble-enter-active {
+  animation: bubble-enter linear forwards;
+}
+
+@keyframes bubble-enter {
+  0% {
+    transform: scale3d(0, 0, 0) translate3d(0, 0, 0);
+    opacity: 1;
+  }
+
   100% {
     transform: scale3d(5, 5, 5) translate3d(0, -50vh, 0);
     opacity: 0;

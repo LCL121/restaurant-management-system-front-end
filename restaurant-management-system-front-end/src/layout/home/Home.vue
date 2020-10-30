@@ -1,8 +1,14 @@
 <template>
-  <div class="home" ref="homeDOM">
+  <div
+    class="home"
+    ref="homeDOM"
+  >
     <h1>{{role}} home</h1>
     <div class="main">
-      <div class="center" @mousemove.stop="">
+      <div
+        class="center"
+        @mousemove.stop=""
+      >
         <nav v-if="role !== ADMIN_ROLE">
           <router-link
             :to="`/signin?role=${role}`"
@@ -25,12 +31,20 @@
       </ul>
     </div>
     <div class="circle">
-      <ul ref="circleULDOM">
+      <ul>
         <li
           v-for="i in 5"
           :key="i"
         ></li>
       </ul>
+      <transition-group name="bubble">
+        <div
+          class="bubble"
+          v-for="item in bubbleList"
+          :key="item.id"
+          :style="item.style"
+        ></div>
+      </transition-group>
     </div>
   </div>
 </template>
@@ -39,7 +53,7 @@
 import { defineComponent, ref, computed, onMounted } from 'vue'
 import { useRoute, useRouter, LocationQuery } from 'vue-router'
 import { ADMIN_ROLE } from '@/utils/role'
-import { homeDOM, circleULDOM, homeDOMEvent } from './ts/createBubble'
+import { homeDOM, homeDOMEvent, bubbleList } from './ts/createBubble'
 
 // type MyLocationQuery = {
 //   role: string;
@@ -66,12 +80,7 @@ export default defineComponent({
 
     onMounted(() => {
       if (document.documentElement.clientWidth > 500) {
-        if (circleULDOM.value?.animate) {
-          console.log('Your browser support Element.animate()')
-          homeDOMEvent()
-        } else {
-          console.log('Your browser doesn\'t support Element.animate()')
-        }
+        homeDOMEvent()
       }
     })
 
@@ -80,7 +89,7 @@ export default defineComponent({
       ADMIN_ROLE,
       role,
       homeDOM,
-      circleULDOM
+      bubbleList
     }
   }
 })
