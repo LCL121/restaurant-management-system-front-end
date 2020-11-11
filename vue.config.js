@@ -9,25 +9,34 @@ module.exports = {
   publicPath: process.env.VUE_APP_BASE_API,
   devServer: {
     before: function (app, server, compiler) {
-      const domainName = '192.168.101.1'
+      const domainName = '192.168.1.101'
       const backEndPort = '8080'
 
       app.use(bodyParser.urlencoded({ extended: false }))
 
       app.all(/^\/api\/dbcourse\/.*/, (req, res) => {
 
-        console.log(chalk.blue(`${req.method} to: http://${domainName}.com:${backEndPort}${req.url}`))
+        console.log(chalk.blue(`${req.method} to: http://${domainName}:${backEndPort}${req.url}`))
 
         if (req.method === 'OPTIONS') {
           res.sendStatus(200);
         } else if (req.method === 'GET') {
-          axios.get(`http://${domainName}.com:${backEndPort}${req.url}`, {
+          axios.get(`http://${domainName}:${backEndPort}${req.url}`, {
             headers: req.headers
           })
             .then((tempRes) => {
               const data = tempRes.data
-              res.header('content-type', tempRes.headers['content-type'])
               console.log(chalk.green(`The data is: ${JSON.stringify(data)}`))
+              res.header('content-type', tempRes.headers['content-type'])
+              const cookies = setCookieParser.parse(tempRes.headers['set-cookie'])
+              for (const cookie of cookies) {
+                const keys = Reflect.ownKeys(cookie)
+                const options = {}
+                for (const key of keys) {
+                  options[key] = cookie[key]
+                }
+                res.cookie(cookie.name, cookie.value, options)
+              }
               res.send(data)
             })
             .catch(e => {
@@ -39,7 +48,7 @@ module.exports = {
         } else if (req.method === 'POST') {
           console.log(req.body)
           axios.request({
-            url: `http://${domainName}.com:${backEndPort}${req.url}`,
+            url: `http://${domainName}:${backEndPort}${req.url}`,
             method: 'post',
             headers: req.headers,
             data: qs.stringify(req.body)
@@ -50,10 +59,12 @@ module.exports = {
               res.header('Content-Type', tempRes.headers['content-type'])
               const cookies = setCookieParser.parse(tempRes.headers['set-cookie'])
               for (const cookie of cookies) {
-                res.cookie(cookie.name, cookie.value, {
-                  maxAge: cookie.maxAge,
-                  expires: cookie.expires
-                })
+                const keys = Reflect.ownKeys(cookie)
+                const options = {}
+                for (const key of keys) {
+                  options[key] = cookie[key]
+                }
+                res.cookie(cookie.name, cookie.value, options)
               }
               res.send(data)
             })
