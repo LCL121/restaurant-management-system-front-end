@@ -57,6 +57,9 @@ const actions = {
       },
       status: 200
     }
+  },
+  signUp () {
+    axios.post('/api/dbcourse/user/register', qs)
   }
 }
 

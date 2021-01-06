@@ -9,8 +9,8 @@ module.exports = {
   publicPath: process.env.VUE_APP_BASE_API,
   devServer: {
     before: function (app, server, compiler) {
-      const domainName = '192.168.1.101'
-      const backEndPort = '8080'
+      const domainName = '47.99.162.57'
+      const backEndPort = '80'
 
       app.use(bodyParser.urlencoded({ extended: false }))
 
