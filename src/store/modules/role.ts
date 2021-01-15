@@ -1,5 +1,6 @@
 import axios, { AxiosResponse } from 'axios'
 import { Commit } from 'vuex'
+import qs from 'qs'
 
 interface StudentState {
   studentNumber: string;
@@ -24,11 +25,11 @@ export interface RoleState {
 }
 
 const state: RoleState = {
-  belong: '',
+  belong: 'student',
   student: {
-    studentNumber: '',
-    email: '',
-    name: ''
+    studentNumber: '1',
+    email: '1391436522@qq.com',
+    name: 'LCL'
   },
   business: {
     email: '',
@@ -42,13 +43,23 @@ const state: RoleState = {
 const getters = {}
 
 const actions = {
-  async getStudentInfo (
-    { commit }: { commit: Commit }
-  ) {
-    const res: AxiosResponse = await axios.get('/api/dbcourse/role.json')
-    const data = res.data.data
-    commit('GET_STUDENT_INFO', { belong: data.role, student: data.data })
-    return res
+  async getStudentInfo () {
+    const res: AxiosResponse = await axios.post('/api/dbcourse/user/login', qs.stringify({
+      id: '1463507919@qq.com',
+      password: '456'
+    }))
+    console.log(res)
+    return {
+      data: {
+        data: {
+          role: 'student'
+        }
+      },
+      status: 200
+    }
+  },
+  signUp () {
+    axios.post('/api/dbcourse/user/register', qs)
   }
 }
 

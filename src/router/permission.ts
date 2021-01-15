@@ -2,45 +2,11 @@ import axios, { AxiosResponse } from 'axios'
 import { RouteRecordRaw } from 'vue-router'
 import router from './index'
 import store from '@/store'
-import Student from '@/layout/student/Student.vue'
+// import Student from '@/layout/student/Student.vue'
 import Business from '@/layout/business/Business.vue'
 import Admin from '@/layout/admin/Admin.vue'
 
-import { STUDENT_ROLE, BUSINESS_ROLE, ADMIN_ROLE } from '@/utils/role'
-
-export const studentRoute: RouteRecordRaw = {
-  path: '/student',
-  name: 'Student',
-  component: Student,
-  redirect: '/student/student-home',
-  children: [
-    {
-      path: 'student-home',
-      name: 'StudentHome',
-      component: () => import(/* webpackChunkName: "student-home" */ '@/views/student-home/StudentHome.vue')
-    },
-    {
-      path: 'student-details',
-      name: 'StudentDetails',
-      component: () => import(/* webpackChunkName: "student-details" */ '@/views/student-details/StudentDetails.vue')
-    },
-    {
-      path: 'student-search',
-      name: 'StudentSearch',
-      component: () => import(/* webpackChunkName: "student-search" */ '@/views/student-search/StudentSearch.vue')
-    },
-    {
-      path: 'food-sort',
-      name: 'FoodSort',
-      component: () => import(/* webpackChunkName: "food-sort" */ '@/views/food-sort/FoodSort.vue')
-    },
-    {
-      path: 'order-page',
-      name: 'OrderPage',
-      component: () => import(/* webpackChunkName: "order-page" */ '@/views/order-page/OrderPage.vue')
-    }
-  ]
-}
+import { BUSINESS_ROLE, ADMIN_ROLE } from '@/utils/role'
 
 export const businessRoute: RouteRecordRaw = {
   path: '/business',
@@ -100,9 +66,6 @@ router.beforeEach(async (to, from, next) => {
     if (res.status === 200) {
       const role = res.data.data.role
       switch (role) {
-        case STUDENT_ROLE:
-          router.addRoute(studentRoute)
-          break
         case BUSINESS_ROLE:
           router.addRoute(businessRoute)
           break

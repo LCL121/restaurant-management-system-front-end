@@ -3,7 +3,7 @@ import { Router } from 'vue-router'
 import { Inputs } from './initInputs'
 import { STUDENT_ROLE, BUSINESS_ROLE } from '@/utils/role'
 import store from '@/store'
-import { studentRoute, businessRoute } from '@/router/permission'
+import axios from 'axios'
 
 interface InputDOMStatus {
   (): boolean;
@@ -44,6 +44,10 @@ export const operateSendCode = (data: Inputs) => {
   if (emailStatus()) {
     console.log('email 已经填写')
     codeButtonText.value = '60秒后重发'
+    axios.get(`/api/dbcourse/user/getCode?email=${data.value}`)
+      .then(res => {
+        console.log(res)
+      })
     setTimeout(countDown, 1000)
   }
 }

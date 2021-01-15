@@ -1,14 +1,100 @@
 const path = require('path')
+const axios = require('axios')
+const bodyParser = require('body-parser')
+const qs = require('qs')
+const setCookieParser = require('set-cookie-parser')
+const chalk = require('chalk')
 
 module.exports = {
   publicPath: process.env.VUE_APP_BASE_API,
-  // devServer: {
-  //   proxy: {
-  //     '^/api/dbcourse': {
-  //       target: '',
-  //     }
-  //   }
-  // },
+  devServer: {
+    before: function (app, server, compiler) {
+      const domainName = '47.99.162.57'
+      const backEndPort = '80'
+
+      app.use(bodyParser.urlencoded({ extended: false }))
+
+      app.all(/^\/api\/dbcourse\/.*/, (req, res) => {
+
+        console.log(chalk.blue(`${req.method} to: http://${domainName}:${backEndPort}${req.url}`))
+
+        if (req.method === 'OPTIONS') {
+          res.sendStatus(200);
+        } else if (req.method === 'GET') {
+          axios.get(`http://${domainName}:${backEndPort}${req.url}`, {
+            headers: req.headers
+          })
+            .then((tempRes) => {
+              const data = tempRes.data
+              console.log(chalk.green(`The data is: ${JSON.stringify(data)}`))
+              res.header('content-type', tempRes.headers['content-type'])
+              const cookies = setCookieParser.parse(tempRes.headers['set-cookie'])
+              for (const cookie of cookies) {
+                const keys = Reflect.ownKeys(cookie)
+                const options = {}
+                for (const key of keys) {
+                  options[key] = cookie[key]
+                }
+                res.cookie(cookie.name, cookie.value, options)
+              }
+              res.send(data)
+            })
+            .catch(e => {
+              console.log(chalk.red('get 出错！'))
+              const data = e.response.data
+              console.log(chalk.red(JSON.stringify(data)))
+              res.send(data)
+            })
+        } else if (req.method === 'POST') {
+          console.log(req.body)
+          axios.request({
+            url: `http://${domainName}:${backEndPort}${req.url}`,
+            method: 'post',
+            headers: req.headers,
+            data: qs.stringify(req.body)
+          })
+            .then(tempRes => {
+              const data = tempRes.data
+              console.log(chalk.green(`The data is: ${JSON.stringify(data)}`))
+              res.header('Content-Type', tempRes.headers['content-type'])
+              const cookies = setCookieParser.parse(tempRes.headers['set-cookie'])
+              for (const cookie of cookies) {
+                const keys = Reflect.ownKeys(cookie)
+                const options = {}
+                for (const key of keys) {
+                  options[key] = cookie[key]
+                }
+                res.cookie(cookie.name, cookie.value, options)
+              }
+              res.send(data)
+            })
+            .catch(e => {
+              console.log(chalk.red('post 出错！'))
+              const data = e.response.data
+              console.log(chalk.red(JSON.stringify(data)))
+              res.send(data)
+            })
+        } else if (req.method === 'DELETE') {
+          console.log()
+          axios.delete(`http://${domainName}:${backEndPort}${req.url}`, {
+            headers: req.headers
+          })
+            .then((tempRes) => {
+              const data = tempRes.data
+              res.header('content-type', tempRes.headers['content-type'])
+              console.log(chalk.green(`The data is: ${JSON.stringify(data)}`))
+              res.send(data)
+            })
+            .catch(e => {
+              console.log(chalk.red('delete 出错！'))
+              const data = e.response.data
+              console.log(chalk.red(JSON.stringify(data)))
+              res.send(data)
+            })
+        }
+      })
+    }
+  },
   chainWebpack: (config) => {
     config
       .plugin('html')

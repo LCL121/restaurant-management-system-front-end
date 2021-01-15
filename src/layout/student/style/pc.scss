@@ -5,6 +5,7 @@
     .student-search {
       position: absolute;
       top: px2rem(10);
+      box-shadow: 0 0.02rem 0.06rem 0 rgba(0, 0, 0, 0.05);
 
       .icon-search {
         font-size: 20px;
@@ -20,7 +21,8 @@
       display: flex;
 
       .student-list {
-        width: px2rem(400);
+        width: px2rem(280);
+        background: #f8f8f8;
       }
 
       .student-view {
