@@ -1,5 +1,6 @@
 export interface CarouselPictureData {
   imgSrc: string;
+  currentTranslateX?: number;
   url?: string;
 }
 

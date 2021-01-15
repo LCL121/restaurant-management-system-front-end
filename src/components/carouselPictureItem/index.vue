@@ -34,15 +34,18 @@ export default defineComponent({
     url: {
       type: String,
       required: false
+    },
+    currentTranslateX: {
+      type: Number,
+      required: false
     }
   },
   setup(props) {
     // const currentScreenX = screen.width
     const currentScreenX = window.innerWidth
-    const boundary = currentScreenX / 2
     const modNumer = props.maxIndex + 1
     const data = reactive({
-      translateX: 0,
+      translateX: currentScreenX,
       // 倒叙，使初始化不会有覆盖
       zIndex: 100 - props.index,
       // 一般为0ms，只有当有元素移动时设为300ms，使非移动调换位置时不会出现覆盖
@@ -50,14 +53,31 @@ export default defineComponent({
     })
 
     // 初始化
-    if (props.index === props.currentIndex + 1) {
-      data.translateX = currentScreenX
+    if (props.index === props.currentIndex) {
+      data.translateX = 0
     }
     if (props.index === props.maxIndex) {
       data.translateX = -currentScreenX
     }
 
     watch(() => props.currentIndex, (newValue, oldValue) => {
+      if ((newValue + modNumer) % (modNumer) === (oldValue + modNumer - 1) % (modNumer)) {
+        if (props.index === (newValue + modNumer) % (modNumer)) {
+          data.translateX = 0
+          data.transitionDuration = 300
+          setTimeout(() => {
+            data.transitionDuration = 0
+          }, 300)
+        } else if (props.index === (newValue + 1 + modNumer) % (modNumer)) {
+          data.translateX = currentScreenX
+          data.transitionDuration = 300
+          setTimeout(() => {
+            data.transitionDuration = 0
+          }, 300)
+        } else if (props.index === (newValue - 1 + modNumer) % (modNumer)) {
+          data.translateX = -currentScreenX
+        }
+      }
       if ((newValue + modNumer) % (modNumer) === (oldValue + modNumer + 1) % (modNumer)) {
         if (props.index === (newValue + modNumer) % (modNumer)) {
           data.translateX = 0

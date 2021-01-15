@@ -1,5 +1,9 @@
 <template>
-  <div class="carousel-picture">
+  <div
+    class="carousel-picture"
+    @touchStart="touchStart"
+    @touchEnd="touchEnd"
+  >
     <carousel-picture-item
       v-for="(item, index) in list"
       :key="item.imgSrc"
@@ -8,6 +12,7 @@
       :currentIndex="currentIdx"
       :maxIndex="list.length - 1"
       :index="index"
+      :currentTranslateX="item.currentTranslateX"
     ></carousel-picture-item>
     <div class="dots">
       <span
@@ -38,13 +43,55 @@ export default defineComponent({
   },
   setup(props) {
     const currentIdx = ref(0)
-    const timer = setInterval(() => {
+    const sleepTime = 3000
+    const currentScreenX = window.innerWidth
+    const boundaryX = currentScreenX / 6
+    let startX = 0
+    let startTime = 0
+    let timer = setInterval(() => {
       currentIdx.value++
       if (currentIdx.value === props.list.length) currentIdx.value = 0
-    }, 3000)
+    }, sleepTime)
+
+    const touchStart = (event: TouchEvent) => {
+      clearInterval(timer)
+      startX = event.touches[0].pageX
+      startTime = new Date().getTime()
+      timer = 0
+    }
+
+    const touchEnd = (event: TouchEvent) => {
+      const x = event.changedTouches[0].pageX - startX
+      const t = new Date().getTime() - startTime
+      if (t >= 150) {
+        if (x < boundaryX) {
+          currentIdx.value++
+        }
+        if (x > boundaryX) {
+          currentIdx.value--
+        }
+      } else {
+        x < 0 ? currentIdx.value++ : currentIdx.value--
+      }
+      if (currentIdx.value === props.list.length) currentIdx.value = 0
+      if (currentIdx.value === -1) currentIdx.value = props.list.length - 1
+      startX = 0
+      if (!timer) {
+        timer = setInterval(() => {
+          currentIdx.value++
+          if (currentIdx.value === props.list.length) currentIdx.value = 0
+        }, sleepTime)
+      }
+    }
+
+    onUnmounted(() => {
+      clearInterval(timer)
+    })
 
     return {
-      currentIdx
+      currentIdx,
+      touchStart,
+      touchEnd
     }
   }
 })
