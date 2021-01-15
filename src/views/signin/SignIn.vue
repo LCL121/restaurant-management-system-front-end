@@ -35,11 +35,11 @@
     </div>
     <router-link
       v-if="role === STUDENT_ROLE"
-      to="/signin?role=business"
+      to="/home/signin?role=business"
     >商家登录</router-link>
     <router-link
       v-else
-      to="/signin?role=student"
+      to="/home/signin?role=student"
     >学生登录</router-link>
   </form>
 </template>

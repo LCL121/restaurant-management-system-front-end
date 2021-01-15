@@ -1,32 +1,32 @@
 <template>
   <div class="student">
-    <nav class="student-nav">nav</nav>
-    <div class="student-detail">
-      <div class="student-list">
-        <div class="student-list-center">
-          <router-link v-for="item in studentNavList" :key="item.name" :to="item.url">{{item.name}}</router-link>
-        </div>
-      </div>
-      <router-view class="student-view" />
-    </div>
+    <student-global-header></student-global-header>
+    <router-view class="student-main-view"/>
+    <student-global-footer></student-global-footer>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { studentNavList } from './ts/studentInit'
+import StudentGlobalHeader from '@/components/studentGlobalHeader/index.vue'
+import StudentGlobalFooter from '@/components/studentGlobalFooter/index.vue'
 
 export default defineComponent({
   name: 'Student',
-  setup () {
-    return {
-      studentNavList
-    }
+  components: {
+    StudentGlobalHeader,
+    StudentGlobalFooter
   }
 })
 </script>
 
 <style scoped lang="scss">
-@import "./style/pc.scss";
-@import "./style/mobile.scss";
+@import "@/style/index.scss";
+
+.student {
+  width: 100vw;
+  .student-main-view {
+    margin-top: $student-header-height;
+  }
+}
 </style>

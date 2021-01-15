@@ -7,6 +7,10 @@ import { STUDENT_ROLE } from '@/utils/role'
 const constantRoutes: Array<RouteRecordRaw> = [
   {
     path: '/',
+    redirect: '/student'
+  },
+  {
+    path: '/home',
     name: 'Home',
     component: Home,
     redirect: {

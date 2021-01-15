@@ -1,61 +1,6 @@
 <template>
   <div class="student-home">
-    <p>student home</p>
-    <p>student home</p>
-    <p>student home</p>
-    <p>student home</p>
-    <p>student home</p>
-    <p>student home</p>
-    <p>student home</p>
-    <p>student home</p>
-    <p>student home</p>
-    <p>student home</p>
-    <p>student home</p>
-    <p>student home</p>
-    <p>student home</p>
-    <p>student home</p>
-    <p>student home</p>
-    <p>student home</p>
-    <p>student home</p>
-    <p>student home</p>
-    <p>student home</p>
-    <p>student home</p>
-    <p>student home</p>
-    <p>student home</p>
-    <p>student home</p>
-    <p>student home</p>
-    <p>student home</p>
-    <p>student home</p>
-    <p>student home</p>
-    <p>student home</p>
-    <p>student home</p>
-    <p>student home</p>
-    <p>student home</p>
-    <p>student home</p>
-    <p>student home</p>
-    <p>student home</p>
-    <p>student home</p>
-    <p>student home</p>
-    <p>student home</p>
-    <p>student home</p>
-    <p>student home</p>
-    <p>student home</p>
-    <p>student home</p>
-    <p>student home</p>
-    <p>student home</p>
-    <p>student home</p>
-    <p>student home</p>
-    <p>student home</p>
-    <p>student home</p>
-    <p>student home</p>
-    <p>student home</p>
-    <p>student home</p>
-    <p>student home</p>
-    <p>student home</p>
-    <p>student home</p>
-    <p>student home</p>
-    <p>student home</p>
-    <p>student home</p>
+    home
   </div>
 </template>
 
@@ -68,4 +13,6 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
+.student-home {
+}
 </style>

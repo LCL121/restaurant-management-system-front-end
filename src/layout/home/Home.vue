@@ -11,11 +11,11 @@
       >
         <nav v-if="role !== ADMIN_ROLE">
           <router-link
-            :to="`/signin?role=${role}`"
+            :to="`/home/signin?role=${role}`"
             :class="{selected: index === 0}"
           >登录</router-link>
           <router-link
-            :to="`/signup?role=${role}`"
+            :to="`/home/signup?role=${role}`"
             :class="{selected: index === 1}"
           >注册</router-link>
         </nav>
@@ -71,7 +71,7 @@ export default defineComponent({
 
     const index = computed(() => {
       const layout = route.path
-      if (layout === '/signin') {
+      if (layout === '/home/signin') {
         return 0
       } else {
         return 1

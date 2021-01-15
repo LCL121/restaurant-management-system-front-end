@@ -3,3 +3,9 @@
   line-height: $h;
   text-align: center;
 }
+
+@mixin blockCenter($w) {
+  max-width: $w;
+  width: 100vw;
+  margin: 0 auto;
+}
