@@ -1,16 +1,12 @@
 <template>
   <div class="student">
-    <div class="student-search">
-      <svg
-        class="icon icon-search"
-        aria-hidden="true"
-      >
-        <use xlink:href="#icon-search"></use>
-      </svg>
-    </div>
     <nav class="student-nav">nav</nav>
     <div class="student-detail">
-      <div class="student-list">list</div>
+      <div class="student-list">
+        <div class="student-list-center">
+          <router-link v-for="item in studentNavList" :key="item.name" :to="item.url">{{item.name}}</router-link>
+        </div>
+      </div>
       <router-view class="student-view" />
     </div>
   </div>
@@ -18,9 +14,15 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import { studentNavList } from './ts/studentInit'
 
 export default defineComponent({
-  name: 'Student'
+  name: 'Student',
+  setup () {
+    return {
+      studentNavList
+    }
+  }
 })
 </script>
 
