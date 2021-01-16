@@ -15,11 +15,9 @@ module.exports = {
       app.use(bodyParser.urlencoded({ extended: false }))
 
       app.all(/^\/api\/dbcourse\/.*/, (req, res) => {
-
         console.log(chalk.blue(`${req.method} to: http://${domainName}:${backEndPort}${req.url}`))
-
         if (req.method === 'OPTIONS') {
-          res.sendStatus(200);
+          res.sendStatus(200)
         } else if (req.method === 'GET') {
           axios.get(`http://${domainName}:${backEndPort}${req.url}`, {
             headers: req.headers

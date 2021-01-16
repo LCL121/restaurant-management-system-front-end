@@ -28,7 +28,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType, computed, ref, onMounted, onUnmounted } from 'vue'
-import { CarouselPictureData } from './type'
+import { CarouselPictureProps } from './type'
 import CarouselPictureItem from '@/components/carouselPictureItem/index.vue'
 
 export default defineComponent({
@@ -38,7 +38,7 @@ export default defineComponent({
   },
   props: {
     list: {
-      type: Array as PropType<CarouselPictureData[]>,
+      type: Array as PropType<CarouselPictureProps[]>,
       required: true
     }
   },
@@ -63,7 +63,6 @@ export default defineComponent({
     }
 
     const touchMove = (event: TouchEvent) => {
-      console.log('touch move')
       moveDistance.value = event.changedTouches[0].pageX - startX
     }
 

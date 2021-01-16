@@ -1,4 +1,4 @@
-export interface CarouselPictureData {
+export interface CarouselPictureProps {
   imgSrc: string;
   url?: string;
 }

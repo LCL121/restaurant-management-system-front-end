@@ -1,6 +1,6 @@
-import { CarouselPictureData } from '@/components/carouselPicture/type'
+import { CarouselPictureProps } from '@/components/carouselPicture/type'
 
-export const carouselPictureDatas: CarouselPictureData[] = [
+export const carouselPictureDatas: CarouselPictureProps[] = [
   {
     imgSrc: require('@/assets/22.jpg')
   },

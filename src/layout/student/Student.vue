@@ -27,6 +27,7 @@ export default defineComponent({
   width: 100vw;
   .student-main-view {
     margin-top: $student-header-height;
+    margin-bottom: $student-footer-height;
   }
 }
 </style>
