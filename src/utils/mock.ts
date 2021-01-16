@@ -17,7 +17,8 @@ Mock.mock(/^\/api\/dbcourse\/food\/list/, {
         if (num < 1.0) return '咸'
       },
       'wicketId|+1': 0,
-      image: () => Mock.Random.image('250x250')
+      // image: () => Mock.Random.image('250x250')
+      image: () => Mock.Random.image()
     }
   ]
 })

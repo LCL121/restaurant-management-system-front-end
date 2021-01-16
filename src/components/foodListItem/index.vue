@@ -34,12 +34,14 @@ export default defineComponent({
 $border-radius: 10px;
 
 .food-list-item {
-  max-width: 46vw;
+  width: 46vw;
   background: #ffffff;
   border-radius: $border-radius;
   margin-bottom: px2rem(15);
   .food-image {
     width: 100%;
+    min-height: 46vw;
+    height: 46vw;
     border-top-left-radius: $border-radius;
     border-top-right-radius: $border-radius;
   }
