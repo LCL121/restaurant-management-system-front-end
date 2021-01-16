@@ -1,5 +1,4 @@
 import axios, { AxiosResponse } from 'axios'
-import { Commit } from 'vuex'
 import qs from 'qs'
 
 interface StudentState {
@@ -44,11 +43,11 @@ const getters = {}
 
 const actions = {
   async getStudentInfo () {
-    const res: AxiosResponse = await axios.post('/api/dbcourse/user/login', qs.stringify({
-      id: '1463507919@qq.com',
-      password: '456'
-    }))
-    console.log(res)
+    // const res: AxiosResponse = await axios.post('/api/dbcourse/user/login', qs.stringify({
+    //   id: '123456786@qq.com',
+    //   password: '123abcABC'
+    // }))
+    // console.log(res)
     return {
       data: {
         data: {

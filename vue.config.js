@@ -10,7 +10,7 @@ module.exports = {
   devServer: {
     before: function (app, server, compiler) {
       const domainName = '47.99.162.57'
-      const backEndPort = '80'
+      const backEndPort = '8081'
 
       app.use(bodyParser.urlencoded({ extended: false }))
 

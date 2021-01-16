@@ -8,3 +8,11 @@ export interface Food {
 }
 
 export type FoodList = Food[]
+
+interface FoodState {
+  recommendFoodList: FoodList;
+}
+
+const state = {
+  recommendFoodList: []
+}

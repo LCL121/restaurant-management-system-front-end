@@ -50,7 +50,7 @@ export default defineComponent({
     let startX = 0
     let startTime = 0
     const moveDistance = ref(0)
-    let timer = setInterval(() => {
+    let timer = window.setInterval(() => {
       currentIdx.value++
       if (currentIdx.value === props.list.length) currentIdx.value = 0
     }, sleepTime)
@@ -84,7 +84,7 @@ export default defineComponent({
       if (currentIdx.value === -1) currentIdx.value = props.list.length - 1
       startX = 0
       if (!timer) {
-        timer = setInterval(() => {
+        timer = window.setInterval(() => {
           currentIdx.value++
           if (currentIdx.value === props.list.length) currentIdx.value = 0
         }, sleepTime)

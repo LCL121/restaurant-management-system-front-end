@@ -12,7 +12,7 @@
 <script lang="ts">
 import { defineComponent, onMounted, reactive, ref } from 'vue'
 import axios, { AxiosResponse } from 'axios'
-import { FoodList } from './ts/type'
+import { FoodList } from '@/store/modules/food'
 import CarouselPicture from '@/components/carouselPicture/index.vue'
 import FoodListModel from '@/components/foodListModel/index.vue'
 import { FoodListModelProps } from '@/components/foodListModel/type'
