@@ -1,8 +1,4 @@
-export interface CarouselPictureData {
-  imgSrc: string;
-  currentTranslateX?: number;
-  url?: string;
-}
+import { CarouselPictureData } from '@/components/carouselPicture/type'
 
 export const carouselPictureDatas: CarouselPictureData[] = [
   {

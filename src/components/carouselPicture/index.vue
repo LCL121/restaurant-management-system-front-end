@@ -3,6 +3,7 @@
     class="carousel-picture"
     @touchStart="touchStart"
     @touchEnd="touchEnd"
+    @touchMove="touchMove"
   >
     <carousel-picture-item
       v-for="(item, index) in list"
@@ -12,7 +13,7 @@
       :currentIndex="currentIdx"
       :maxIndex="list.length - 1"
       :index="index"
-      :currentTranslateX="item.currentTranslateX"
+      :moveDistance="moveDistance"
     ></carousel-picture-item>
     <div class="dots">
       <span
@@ -27,7 +28,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType, computed, ref, onMounted, onUnmounted } from 'vue'
-import { CarouselPictureData } from '@/utils/testData'
+import { CarouselPictureData } from './type'
 import CarouselPictureItem from '@/components/carouselPictureItem/index.vue'
 
 export default defineComponent({
@@ -43,11 +44,12 @@ export default defineComponent({
   },
   setup(props) {
     const currentIdx = ref(0)
-    const sleepTime = 3000
+    const sleepTime = 5000
     const currentScreenX = window.innerWidth
-    const boundaryX = currentScreenX / 6
+    const boundaryX = currentScreenX / 4
     let startX = 0
     let startTime = 0
+    const moveDistance = ref(0)
     let timer = setInterval(() => {
       currentIdx.value++
       if (currentIdx.value === props.list.length) currentIdx.value = 0
@@ -60,15 +62,21 @@ export default defineComponent({
       timer = 0
     }
 
+    const touchMove = (event: TouchEvent) => {
+      console.log('touch move')
+      moveDistance.value = event.changedTouches[0].pageX - startX
+    }
+
     const touchEnd = (event: TouchEvent) => {
       const x = event.changedTouches[0].pageX - startX
       const t = new Date().getTime() - startTime
       if (t >= 150) {
-        if (x < boundaryX) {
+        if (x < -boundaryX) {
           currentIdx.value++
-        }
-        if (x > boundaryX) {
+        } else if (x > boundaryX) {
           currentIdx.value--
+        } else {
+          moveDistance.value = 0
         }
       } else {
         x < 0 ? currentIdx.value++ : currentIdx.value--
@@ -91,7 +99,9 @@ export default defineComponent({
     return {
       currentIdx,
       touchStart,
-      touchEnd
+      touchMove,
+      touchEnd,
+      moveDistance
     }
   }
 })
