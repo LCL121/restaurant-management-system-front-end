@@ -5,11 +5,12 @@
       :foodList="foodListModelProps"
       title="猜你喜欢"
     ></food-list-model>
+    <div ref="observedRef"></div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, reactive } from 'vue'
+import { defineComponent, onMounted, reactive, ref } from 'vue'
 import axios, { AxiosResponse } from 'axios'
 import { FoodList } from './ts/type'
 import CarouselPicture from '@/components/carouselPicture/index.vue'
@@ -25,13 +26,13 @@ export default defineComponent({
   },
   setup() {
     const foodListModelProps = reactive<FoodListModelProps>([])
-
-    onMounted(() => {
+    const observedRef = ref<HTMLDivElement>()
+    const intersectionObserver = new IntersectionObserver(entries => {
+      if (entries[0].intersectionRatio <= 0) return
       axios.get('/api/dbcourse/food/list')
         .then((res: AxiosResponse<{
           data: FoodList;
         }>) => {
-          console.log(res.data.data)
           res.data.data.map(item => {
             foodListModelProps.push({
               foodId: item.foodId,
@@ -43,9 +44,30 @@ export default defineComponent({
         })
     })
 
+    onMounted(() => {
+      axios.get('/api/dbcourse/food/list')
+        .then((res: AxiosResponse<{
+          data: FoodList;
+        }>) => {
+          res.data.data.map(item => {
+            foodListModelProps.push({
+              foodId: item.foodId,
+              imgSrc: item.image,
+              foodName: item.name,
+              foodPrice: item.price
+            })
+          })
+        })
+
+      if (observedRef.value) {
+        intersectionObserver.observe(observedRef.value)
+      }
+    })
+
     return {
       carouselPictureDatas,
-      foodListModelProps
+      foodListModelProps,
+      observedRef
     }
   }
 })
