@@ -54,7 +54,6 @@ const actions: ActionTree<FoodState, RootState> = {
   fetchFoodList({ state, commit }) {
     if (!state.finish && !state.pending) {
       commit('changePendingState', true)
-      console.log(state.currentPage)
       axios.get(`/api/dbcourse/food/list?page=${state.currentPage}&size=${state.pageSize}`)
         .then((res: AxiosResponse<{
           data: FoodList;
