@@ -10,9 +10,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, reactive, ref } from 'vue'
+import { defineComponent, onMounted, reactive, ref, computed } from 'vue'
+import { useStore } from 'vuex'
 import axios, { AxiosResponse } from 'axios'
-import { FoodList } from '@/store/modules/food'
+import { RootState } from '@/store/type'
+import { FoodList } from '@/store/modules/recommendFood'
 import CarouselPicture from '@/components/carouselPicture/index.vue'
 import FoodListModel from '@/components/foodListModel/index.vue'
 import { FoodListModelProps } from '@/components/foodListModel/type'
@@ -25,39 +27,24 @@ export default defineComponent({
     FoodListModel
   },
   setup() {
-    const foodListModelProps = reactive<FoodListModelProps>([])
+    const store = useStore<RootState>()
     const observedRef = ref<HTMLDivElement>()
+    const recommendFoodList = computed(() => store.state.recommendFood.foodList)
+    const foodListModelProps = computed<FoodListModelProps>(() => {
+      return recommendFoodList.value.map(item => ({
+        foodId: item.foodId,
+        imgSrc: item.image || require('@/assets/food_default_image.png'),
+        foodName: item.name,
+        foodPrice: item.price
+      }))
+    })
     const intersectionObserver = new IntersectionObserver(entries => {
       if (entries[0].intersectionRatio <= 0) return
-      axios.get('/api/dbcourse/food/list')
-        .then((res: AxiosResponse<{
-          data: FoodList;
-        }>) => {
-          res.data.data.map(item => {
-            foodListModelProps.push({
-              foodId: item.foodId,
-              imgSrc: item.image,
-              foodName: item.name,
-              foodPrice: item.price
-            })
-          })
-        })
+      store.dispatch('recommendFood/fetchFoodList')
     })
 
     onMounted(() => {
-      axios.get('/api/dbcourse/food/list')
-        .then((res: AxiosResponse<{
-          data: FoodList;
-        }>) => {
-          res.data.data.map(item => {
-            foodListModelProps.push({
-              foodId: item.foodId,
-              imgSrc: item.image,
-              foodName: item.name,
-              foodPrice: item.price
-            })
-          })
-        })
+      store.dispatch('recommendFood/fetchFoodList')
 
       if (observedRef.value) {
         intersectionObserver.observe(observedRef.value)

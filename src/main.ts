@@ -9,7 +9,7 @@ import './router/permission'
 import focus from '@/directive/focus'
 
 import '@/style/index.scss'
-import '@/utils/mock'
+import { mockFoodList } from '@/utils/mock'
 
 if (process.env.VUE_APP_TESTAPI) {
   import('@/tryFiles/tryAPI')
