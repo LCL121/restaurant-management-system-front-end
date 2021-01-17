@@ -2,30 +2,53 @@
   <div class="food-sort">
     <div class="sort-list">
       <dropdown
-        v-for="item in dropDownDatas"
+        v-for="(item, index) in dropDownDatas"
         :key="item.title"
         class="sort-list-item"
         :title="item.title"
         :sortList="item.sortList"
         :currentSortIndex="item.currentSortIndex"
+        :isShowList="item.isShowList"
+        @click="() => {changeShow(index, !item.isShowList)}"
+        @change-selected="(selectedIdx) => {changeSelected(index, selectedIdx)}"
+        @hidden-dropdown="() => {changeShow(index, false)}"
       ></dropdown>
     </div>
+    <dropdown-mask v-if="isShowMask"></dropdown-mask>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { computed, defineComponent, onMounted, onUnmounted } from 'vue'
 import Dropdown from '@/components/dropdown/index.vue'
-import { dropDownDatas } from './ts/init'
+import DropdownMask from '@/components/dropdownMask/index.vue'
+import { getDropDownDatas } from './ts/init'
 
 export default defineComponent({
   name: 'FoodSort',
   components: {
-    Dropdown
+    Dropdown,
+    DropdownMask
   },
   setup() {
+    const dropDownDatas = getDropDownDatas()
+    const changeSelected = (index: number, selectedIdx: number) => {
+      dropDownDatas[index].currentSortIndex = selectedIdx
+    }
+    const changeShow = (index: number, isShow: boolean) => {
+      dropDownDatas[index].isShowList = isShow
+    }
+    const isShowMask = computed(() => dropDownDatas.some(item => item.isShowList))
+
+    onMounted(() => {
+      window.scroll(0, 0)
+    })
+
     return {
-      dropDownDatas
+      dropDownDatas,
+      changeSelected,
+      changeShow,
+      isShowMask
     }
   }
 })
@@ -48,6 +71,7 @@ $sort-list-height: px2rem(60);
       position: relative;
       text-align: center;
       line-height: $sort-list-height;
+      box-sizing: border-box;
     }
     .sort-list-item:nth-child(2)::before {
       content: '';

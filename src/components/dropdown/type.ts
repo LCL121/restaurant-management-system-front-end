@@ -9,4 +9,5 @@ export interface DropdownProps {
   title: string;
   sortList: SortList;
   currentSortIndex: number;
+  isShowList: boolean;
 }
