@@ -33,7 +33,7 @@ module.exports = {
                 for (const key of keys) {
                   options[key] = cookie[key]
                 }
-                res.cookie(cookie.name, cookie.value, options)
+                res.cookie(cookie.name, cookie.value)
               }
               res.send(data)
             })
@@ -62,7 +62,9 @@ module.exports = {
                 for (const key of keys) {
                   options[key] = cookie[key]
                 }
-                res.cookie(cookie.name, cookie.value, options)
+                options.maxAge = 900
+                res.cookie(cookie.name, cookie.value)
+                console.log(res.headers)
               }
               res.send(data)
             })

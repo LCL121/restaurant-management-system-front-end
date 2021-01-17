@@ -5,7 +5,7 @@ import router from './router'
 import store from './store'
 
 import '@/icon/iconfont.js'
-import './router/permission'
+// import './router/permission'
 import focus from '@/directive/focus'
 
 import '@/style/index.scss'

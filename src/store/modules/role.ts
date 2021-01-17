@@ -45,6 +45,8 @@ const getters = {}
 
 const actions: ActionTree<RoleState, RootState> = {
   async getStudentInfo () {
+    const res: AxiosResponse = await axios.post('/api/dbcourse/getMessage')
+    console.log(res)
     return {
       data: {
         data: {
