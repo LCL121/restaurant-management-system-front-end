@@ -66,7 +66,10 @@ export default defineComponent({
     const inputs: Inputs = getAccountInputInfo(role.value)
 
     const signIn = () => {
-      operateSignIn(router, role.value)
+      operateSignIn(router, role.value, {
+        id: inputs.accountNumber,
+        password: inputs.password
+      })
     }
 
     // 进一步登录页面权限控制

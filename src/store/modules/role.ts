@@ -1,5 +1,7 @@
 import axios, { AxiosResponse } from 'axios'
+import { ActionTree } from 'vuex'
 import qs from 'qs'
+import { RootState } from '@/store/type'
 
 interface StudentState {
   studentNumber: string;
@@ -41,13 +43,8 @@ const state: RoleState = {
 
 const getters = {}
 
-const actions = {
+const actions: ActionTree<RoleState, RootState> = {
   async getStudentInfo () {
-    // const res: AxiosResponse = await axios.post('/api/dbcourse/user/login', qs.stringify({
-    //   id: '123456786@qq.com',
-    //   password: '123abcABC'
-    // }))
-    // console.log(res)
     return {
       data: {
         data: {
@@ -57,8 +54,16 @@ const actions = {
       status: 200
     }
   },
-  signUp () {
-    axios.post('/api/dbcourse/user/register', qs)
+  async signIn({ state }, data) {
+    const res: AxiosResponse = await axios.post('/api/dbcourse/user/login', qs.stringify(data))
+    console.log(res)
+  },
+  signUp ({ state }, data) {
+    console.log(data)
+    axios.post('/api/dbcourse/user/register', qs.stringify(data))
+      .then(res => {
+        console.log(res)
+      })
   }
 }
 

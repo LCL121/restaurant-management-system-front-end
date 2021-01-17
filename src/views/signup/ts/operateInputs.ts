@@ -1,9 +1,9 @@
 import { ref, reactive, Ref } from 'vue'
 import { Router } from 'vue-router'
-import { Inputs } from './initInputs'
+import { Inputs, data as inputDatas } from './initInputs'
 import { STUDENT_ROLE, BUSINESS_ROLE } from '@/utils/role'
-import store from '@/store'
 import axios from 'axios'
+import store from '@/store'
 
 interface InputDOMStatus {
   (): boolean;
@@ -57,14 +57,20 @@ export const operateSignUp = async (router: Router, role: string | null, data: I
     console.log('sign up 已经全部填写')
     if (data[1].value === data[2].value) {
       console.log('密码确认成功')
-      if (role === STUDENT_ROLE) {
-        router.push('/student/student-home')
-      } else if (role === BUSINESS_ROLE) {
-        router.push('/business/business-home')
-      } else {
-        console.error(new Error('role 发生错误！'))
-        router.push({ name: 'SignIn', query: { role: STUDENT_ROLE } })
-      }
+      store.dispatch('role/signUp', {
+        code: inputDatas[3].value,
+        email: inputDatas[0].value,
+        password: inputDatas[1].value,
+        qualifyPass: inputDatas[2].value
+      })
+      // if (role === STUDENT_ROLE) {
+      //   router.push('/student/student-home')
+      // } else if (role === BUSINESS_ROLE) {
+      //   router.push('/business/business-home')
+      // } else {
+      //   console.error(new Error('role 发生错误！'))
+      //   router.push({ name: 'SignIn', query: { role: STUDENT_ROLE } })
+      // }
     }
   }
 }

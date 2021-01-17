@@ -55,7 +55,6 @@ export default defineComponent({
 
     const role = computed(() => {
       const role = route.query.role as string | null
-      console.log(role === STUDENT_ROLE)
       return role
     })
 

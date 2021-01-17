@@ -14,7 +14,7 @@ const originInputs: Inputs = {
   accountNumberId: '',
   type: 'text',
   placeholder: '',
-  accountNumber: '123456786@qq.com',
+  accountNumber: '1391436522@qq.com',
   password: '123abcABC'
 }
 

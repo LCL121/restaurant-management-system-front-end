@@ -23,15 +23,15 @@ export const data = reactive<Inputs[]>([
     placeholder: '密码 8-16位，包含大小写字母、数字',
     pattern: '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[^]{8,16}$',
     refDom: 'passwordDOM',
-    value: '1234abcdABCD'
+    value: '123abcABC'
   },
   {
     type: 'password',
     id: 'confirmId',
-    placeholder: '密码 8-16位，包含大小写字母、数字',
+    placeholder: '确认密码',
     pattern: '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[^]{8,16}$',
     refDom: 'confirmDOM',
-    value: '1234abcdABCD'
+    value: '123abcABC'
   },
   {
     type: 'text',
@@ -39,6 +39,6 @@ export const data = reactive<Inputs[]>([
     placeholder: '验证码',
     pattern: '^(\\d){4}$',
     refDom: 'codeDOM',
-    value: '1234'
+    value: ''
   }
 ])
