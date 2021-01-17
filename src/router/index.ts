@@ -131,9 +131,16 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   if (to.meta.needLogin) {
     store.dispatch('role/getStudentInfo')
+      .then((res: boolean) => {
+        if (res) {
+          next()
+        } else {
+          next('/home')
+        }
+      })
+  } else {
     next()
   }
-  next()
 })
 
 export default router
