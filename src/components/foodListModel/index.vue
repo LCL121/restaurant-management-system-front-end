@@ -8,6 +8,7 @@
         :foodName="item.foodName"
         :foodPrice="item.foodPrice"
         :imgSrc="item.imgSrc"
+        @click="goTo(`/food?foodId=${item.foodId}`)"
       ></food-list-item>
     </div>
   </div>
@@ -17,6 +18,7 @@
 import { defineComponent, PropType } from 'vue'
 import FoodListItem from '@/components/foodListItem/index.vue'
 import { FoodListModelProps } from './type'
+import { goTo } from '@/utils'
 
 export default defineComponent({
   name: 'FoodListModel',
@@ -29,6 +31,11 @@ export default defineComponent({
       required: true
     },
     title: String
+  },
+  setup() {
+    return {
+      goTo
+    }
   }
 })
 </script>

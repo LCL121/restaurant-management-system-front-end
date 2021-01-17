@@ -9,7 +9,15 @@ export interface Food {
   taste: string;
   wicketId: number;
   image: string;
+  wicketNumber?: number;
+  floor?: number;
 }
+
+export type RespenseFoodDetails = AxiosResponse<{
+  code: string;
+  msg: string;
+  data: Food;
+}>
 
 export type FoodList = Food[]
 
@@ -64,7 +72,7 @@ const actions: ActionTree<FoodState, RootState> = {
         .then((res: RespenseFoodList) => {
           const data = res.data
           if (data.code === '200') {
-            if (data.data!.length === 0) {
+            if (data.data?.length === 0) {
               commit('changeFinishState')
             } else {
               commit('addCurrentPage')

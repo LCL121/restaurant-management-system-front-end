@@ -49,11 +49,6 @@ const constantRoutes: Array<RouteRecordRaw> = [
         component: () => import(/* webpackChunkName: "student-details" */ '@/views/student-details/StudentDetails.vue')
       },
       {
-        path: 'student-search',
-        name: 'StudentSearch',
-        component: () => import(/* webpackChunkName: "student-search" */ '@/views/student-search/StudentSearch.vue')
-      },
-      {
         path: 'food-sort',
         name: 'FoodSort',
         component: () => import(/* webpackChunkName: "food-sort" */ '@/views/food-sort/FoodSort.vue')
@@ -64,6 +59,11 @@ const constantRoutes: Array<RouteRecordRaw> = [
         component: () => import(/* webpackChunkName: "order-page" */ '@/views/order-page/OrderPage.vue')
       }
     ]
+  },
+  {
+    path: '/food',
+    name: 'Food',
+    component: () => import(/* webpackChunkName: "food" */ '@/views/food-details/FoodDetails.vue')
   },
   {
     path: '/about',
