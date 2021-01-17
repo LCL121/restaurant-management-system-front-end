@@ -15,40 +15,81 @@
       ></dropdown>
     </div>
     <dropdown-mask v-if="isShowMask"></dropdown-mask>
+    <food-list-model :foodList="foodListModelProps" :title="title"></food-list-model>
+    <div ref="observedRef"></div>
   </div>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, onUnmounted } from 'vue'
+import { computed, defineComponent, onMounted, onUnmounted, reactive, ref } from 'vue'
 import Dropdown from '@/components/dropdown/index.vue'
 import DropdownMask from '@/components/dropdownMask/index.vue'
 import { getDropDownDatas } from './ts/init'
+import { FoodList } from '@/store/modules/recommendFood'
+import FoodListModel from '@/components/foodListModel/index.vue'
+import { foodListModelProps, getFoodList, clearFoodList } from './ts/getFoodList'
 
 export default defineComponent({
   name: 'FoodSort',
   components: {
     Dropdown,
-    DropdownMask
+    DropdownMask,
+    FoodListModel
   },
   setup() {
     const dropDownDatas = getDropDownDatas()
+    const observedRef = ref<HTMLDivElement>()
+    const title = ref()
+    const pageSize = 6
+    let currentPage = 1
+    let currentFloorFinished = false
+    let pending = false
+    const getFoodListF = () => {
+      if (!currentFloorFinished && !pending) {
+        pending = true
+        getFoodList(dropDownDatas[0].currentSortIndex + 1, currentPage, pageSize, dropDownDatas[1].sortList[dropDownDatas[1].currentSortIndex].index)
+          .then(data => {
+            if (data) {
+              currentFloorFinished = data.isFinished
+              title.value = data.msg
+            }
+            pending = false
+            currentPage++
+          })
+      }
+    }
     const changeSelected = (index: number, selectedIdx: number) => {
       dropDownDatas[index].currentSortIndex = selectedIdx
+      currentPage = 1
+      clearFoodList()
+      currentFloorFinished = false
+      getFoodListF()
     }
     const changeShow = (index: number, isShow: boolean) => {
       dropDownDatas[index].isShowList = isShow
     }
     const isShowMask = computed(() => dropDownDatas.some(item => item.isShowList))
+    const intersectionObserver = new IntersectionObserver(entries => {
+      if (entries[0].intersectionRatio <= 0) return
+      getFoodListF()
+    })
 
     onMounted(() => {
       window.scroll(0, 0)
+      if (observedRef.value) {
+        intersectionObserver.observe(observedRef.value)
+      }
+      getFoodListF()
     })
 
     return {
       dropDownDatas,
       changeSelected,
       changeShow,
-      isShowMask
+      isShowMask,
+      foodListModelProps,
+      observedRef,
+      title
     }
   }
 })

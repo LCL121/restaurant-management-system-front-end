@@ -12,7 +12,7 @@
 <script lang="ts">
 import { defineComponent, onMounted, reactive, ref, computed } from 'vue'
 import { useStore } from 'vuex'
-import axios, { AxiosResponse } from 'axios'
+import axios from 'axios'
 import { RootState } from '@/store/type'
 import { FoodList } from '@/store/modules/recommendFood'
 import CarouselPicture from '@/components/carouselPicture/index.vue'

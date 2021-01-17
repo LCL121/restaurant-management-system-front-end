@@ -13,6 +13,12 @@ export interface Food {
 
 export type FoodList = Food[]
 
+export type RespenseFoodList = AxiosResponse<{
+  code: string;
+  msg: string;
+  data: FoodList | null;
+}>
+
 export interface FoodState {
   foodList: FoodList;
   currentPage: number;
@@ -55,15 +61,15 @@ const actions: ActionTree<FoodState, RootState> = {
     if (!state.finish && !state.pending) {
       commit('changePendingState', true)
       axios.get(`/api/dbcourse/food/list?page=${state.currentPage}&size=${state.pageSize}`)
-        .then((res: AxiosResponse<{
-          data: FoodList;
-        }>) => {
-          const list = res.data.data
-          if (list.length === 0) {
-            commit('changeFinishState')
-          } else {
-            commit('addCurrentPage')
-            commit('fetchFoodList', res.data.data)
+        .then((res: RespenseFoodList) => {
+          const data = res.data
+          if (data.code === '200') {
+            if (data.data!.length === 0) {
+              commit('changeFinishState')
+            } else {
+              commit('addCurrentPage')
+              commit('fetchFoodList', res.data.data)
+            }
           }
         })
         .finally(() => {

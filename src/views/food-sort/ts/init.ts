@@ -5,9 +5,6 @@ const dropDownDefaultDatas = [
   {
     title: '楼层',
     sortList: [{
-      index: 0,
-      name: '无'
-    }, {
       index: 1,
       name: '第一层'
     }, {
@@ -55,6 +52,12 @@ const dropDownDefaultDatas = [
     }, {
       index: 11,
       name: '11号'
+    }, {
+      index: 25,
+      name: '25号'
+    }, {
+      index: 43,
+      name: '43号'
     }],
     currentSortIndex: 0,
     isShowList: false

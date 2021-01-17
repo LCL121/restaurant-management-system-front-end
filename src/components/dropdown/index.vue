@@ -9,10 +9,10 @@
       <!-- 最多展示9个 -->
       <li
         class="dorpdown-list-item"
-        v-for="item in sortList"
+        v-for="(item, index) in sortList"
         :key="item.index"
-        :class="{checked: item.index === currentSortIndex}"
-        @click="changeSelected(item.index)"
+        :class="{checked: index === currentSortIndex}"
+        @click="changeSelected(index)"
       >{{item.name}}</li>
     </ul>
   </div>
