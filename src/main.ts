@@ -11,8 +11,8 @@ import focus from '@/directive/focus'
 import '@/style/index.scss'
 import { mockFoodList, mockFoodDetails } from '@/utils/mock'
 
-mockFoodList()
-mockFoodDetails()
+// mockFoodList()
+// mockFoodDetails()
 
 if (process.env.VUE_APP_TESTAPI) {
   import('@/tryFiles/tryAPI')

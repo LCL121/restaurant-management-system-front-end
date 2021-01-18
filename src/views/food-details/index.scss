@@ -54,6 +54,16 @@ $food-buy-heigth: px2rem(80);
       }
     }
   }
+  .food-grade {
+    background: #fff;
+    margin: px2rem(10) 0;
+    padding: px2rem(5) 0;
+      font-size: 14px;
+      color: #333;
+      span {
+        color: #999;
+      }
+  }
   .buy {
     position: fixed;
     height: $food-buy-heigth;

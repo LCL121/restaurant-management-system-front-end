@@ -11,6 +11,7 @@ export interface Food {
   image: string;
   wicketNumber?: number;
   floor?: number;
+  grade?: number | string;
 }
 
 export type RespenseFoodDetails = AxiosResponse<{

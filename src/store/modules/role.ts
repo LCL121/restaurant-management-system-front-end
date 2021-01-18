@@ -3,6 +3,8 @@ import { ActionTree, MutationTree } from 'vuex'
 import qs from 'qs'
 import { RootState } from '@/store/type'
 import { STUDENT_ROLE, BUSINESS_ROLE, ADMIN_ROLE } from '@/utils/role'
+import { ResponseCommon } from '@/utils/type'
+import router from '@/router'
 
 interface StudentInfo {
   email: string;
@@ -39,6 +41,20 @@ export interface RoleState {
   admin: AdminState;
 }
 
+const judgeGoto = (roleCode: number) => {
+  if (roleCode === -1) {
+    console.log('已在其他设备登录')
+    return false
+  } else if (roleCode === 0) {
+    router.push('/student')
+  } else if (roleCode === 1) {
+    router.push('/business')
+  } else if (roleCode === 2) {
+    router.push('/admin')
+  }
+  return true
+}
+
 const state: RoleState = {
   belong: '',
   student: {
@@ -58,40 +74,49 @@ const state: RoleState = {
 const getters = {}
 
 const actions: ActionTree<RoleState, RootState> = {
-  async getStudentInfo ({ commit }) {
+  async getUserInfo ({ commit }) {
     const res: ResponseRoleInfo = await axios.get('/api/dbcourse/getMessage')
     const data = res.data
     console.log(data)
-    // 过期
-    if (data.code === '403') {
-      commit('clearStudentInfo')
-      return false
-    }
     if (data.code === '200') {
       if (data.data?.role === 0) {
         commit('getStudentInfo', data.data)
+        return 0
       }
-      return true
+      return -1
+    } else {
+      commit('clearStudentInfo')
+      return -1
     }
-    // return {
-    //   data: {
-    //     data: {
-    //       role: 'student'
-    //     }
-    //   },
-    //   status: 200
-    // }
   },
-  async signIn({ state }, data) {
-    const res: AxiosResponse = await axios.post('/api/dbcourse/user/login', qs.stringify(data))
-    console.log(res)
+  async signIn({ state, dispatch }, data) {
+    const res: ResponseCommon = await axios.post('/api/dbcourse/user/login', qs.stringify(data))
+    const resData = res.data
+    if (resData.code === '200') {
+      const roleCode: number = await dispatch('getUserInfo')
+      return judgeGoto(roleCode)
+    } else if (resData.code === '402') {
+      // 已登录
+      const roleCode: number = await dispatch('getUserInfo')
+      return judgeGoto(roleCode)
+    } else {
+      return false
+    }
   },
-  signUp ({ state }, data) {
+  signUp({ state }, data) {
     console.log(data)
     axios.post('/api/dbcourse/user/register', qs.stringify(data))
       .then(res => {
         console.log(res)
       })
+  },
+  async logout({ commit }, email) {
+    const res: ResponseCommon = await axios.get(`/api/dbcourse/user/logout?email=${email}`)
+    const data = res.data
+    if (data.code === '200') {
+      return true
+    }
+    return false
   }
 }
 

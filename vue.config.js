@@ -27,14 +27,17 @@ module.exports = {
               console.log(chalk.green(`The data is: ${JSON.stringify(data)}`))
               res.header('content-type', tempRes.headers['content-type'])
               const cookies = setCookieParser.parse(tempRes.headers['set-cookie'])
-              for (const cookie of cookies) {
-                const keys = Reflect.ownKeys(cookie)
-                const options = {}
-                for (const key of keys) {
-                  options[key] = cookie[key]
+              if (cookies.length) {
+                for (const cookie of cookies) {
+                  const keys = Reflect.ownKeys(cookie)
+                  const options = {}
+                  for (const key of keys) {
+                    options[key] = cookie[key]
+                  }
+                  res.cookie(cookie.name, cookie.value)
                 }
-                res.cookie(cookie.name, cookie.value)
               }
+              res.setHeader('content-type', 'application/json')
               res.send(data)
             })
             .catch(e => {
@@ -56,15 +59,15 @@ module.exports = {
               console.log(chalk.green(`The data is: ${JSON.stringify(data)}`))
               res.header('Content-Type', tempRes.headers['content-type'])
               const cookies = setCookieParser.parse(tempRes.headers['set-cookie'])
-              for (const cookie of cookies) {
-                const keys = Reflect.ownKeys(cookie)
-                const options = {}
-                for (const key of keys) {
-                  options[key] = cookie[key]
+              if (cookies.length) {
+                for (const cookie of cookies) {
+                  const keys = Reflect.ownKeys(cookie)
+                  const options = {}
+                  for (const key of keys) {
+                    options[key] = cookie[key]
+                  }
+                  res.cookie(cookie.name, cookie.value)
                 }
-                options.maxAge = 900
-                res.cookie(cookie.name, cookie.value)
-                console.log(res.headers)
               }
               res.send(data)
             })
