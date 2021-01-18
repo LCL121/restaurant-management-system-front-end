@@ -2,6 +2,7 @@ import { createRouter, createWebHistory, RouteRecordRaw, NavigationGuardNext } f
 import store from '@/store'
 import Error404 from '@/views/error-pages/404.vue'
 import { homeRoutes, studentRoutes, businessRoutes, adminRoutes } from './routes'
+import { createMessage } from '@/utils/index'
 
 const constantRoutes: Array<RouteRecordRaw> = [
   {
@@ -42,13 +43,7 @@ const router = createRouter({
 })
 
 const goToLogin = (next: NavigationGuardNext) => {
-  store.commit('message/showMessage', {
-    status: 'fail',
-    title: '请先登录，等待跳转登录页面'
-  })
-  setTimeout(() => {
-    next('/home')
-  }, 2000)
+  createMessage('fail', '请先登录，等待跳转登录页面', '/home')
 }
 
 router.beforeEach((to, from, next) => {

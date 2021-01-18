@@ -6,6 +6,7 @@ import { STUDENT_ROLE, BUSINESS_ROLE, ADMIN_ROLE } from '@/utils/role'
 import { ResponseCommon } from '@/utils/type'
 import router from '@/router'
 import store from '@/store'
+import { createMessage } from '@/utils/index'
 
 interface StudentInfo {
   email: string;
@@ -42,29 +43,16 @@ export interface RoleState {
   admin: AdminState;
 }
 
-const goToSuccess = (path: string) => {
-  store.commit('message/showMessage', {
-    status: 'success',
-    title: '登录成功，等待跳转'
-  })
-  setTimeout(() => {
-    router.push(path)
-  }, 2000)
-}
-
 const judgeGoto = (roleCode: number) => {
   if (roleCode === -1) {
-    store.commit('message/showMessage', {
-      status: 'fail',
-      title: '已在其他设备登录'
-    })
+    createMessage('fail', '已在其他设备登录')
     return false
   } else if (roleCode === 0) {
-    goToSuccess('/student')
+    createMessage('success', '登录成功，等待跳转到首页', '/student')
   } else if (roleCode === 1) {
-    goToSuccess('/business')
+    createMessage('success', '登录成功，等待跳转到首页', '/business')
   } else if (roleCode === 2) {
-    goToSuccess('/admin')
+    createMessage('success', '登录成功，等待跳转到首页', '/admin')
   }
   return true
 }

@@ -1,7 +1,7 @@
 import { reactive } from 'vue'
 import axios from 'axios'
 import qs from 'qs'
-import store from '@/store'
+import { createMessage } from '@/utils/index'
 
 export const foodData = reactive({
   isPageage: false,
@@ -20,25 +20,16 @@ export const changeCount = (value: number) => {
 
 export const addToOrder = (foodId: number) => {
   if (foodData.takeTime === '') {
-    store.commit('message/showMessage', {
-      status: 'fail',
-      title: '请选择预取时间'
-    })
+    createMessage('fail', '请选择预取时间')
     return
   }
   const takeTime = new Date(foodData.takeTime).getTime()
   const differTime = takeTime - Date.now()
   if (differTime < 60 * 1000 * 5) {
-    store.commit('message/showMessage', {
-      status: 'fail',
-      title: '预取时间请大于当前5分钟'
-    })
+    createMessage('fail', '预取时间请大于当前5分钟')
     return
   } else if (differTime > 2 * 24 * 60 * 60 * 1000) {
-    store.commit('message/showMessage', {
-      status: 'fail',
-      title: '预取时间请不要超过当前2天'
-    })
+    createMessage('fail', '预取时间请不要超过当前2天')
     return
   }
   axios.post('/api/dbcourse/order/create', qs.stringify({
