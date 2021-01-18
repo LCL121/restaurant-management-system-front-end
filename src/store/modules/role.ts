@@ -1,10 +1,11 @@
 import axios, { AxiosResponse } from 'axios'
-import { ActionTree, MutationTree } from 'vuex'
+import { ActionTree, Commit, MutationTree } from 'vuex'
 import qs from 'qs'
 import { RootState } from '@/store/type'
 import { STUDENT_ROLE, BUSINESS_ROLE, ADMIN_ROLE } from '@/utils/role'
 import { ResponseCommon } from '@/utils/type'
 import router from '@/router'
+import store from '@/store'
 
 interface StudentInfo {
   email: string;
@@ -43,7 +44,10 @@ export interface RoleState {
 
 const judgeGoto = (roleCode: number) => {
   if (roleCode === -1) {
-    console.log('已在其他设备登录')
+    store.commit('message/showMessage', {
+      status: 'fail',
+      title: '已在其他设备登录'
+    })
     return false
   } else if (roleCode === 0) {
     router.push('/student')
@@ -89,7 +93,7 @@ const actions: ActionTree<RoleState, RootState> = {
       return -1
     }
   },
-  async signIn({ state, dispatch }, data) {
+  async signIn({ state, dispatch, commit }, data) {
     const res: ResponseCommon = await axios.post('/api/dbcourse/user/login', qs.stringify(data))
     const resData = res.data
     if (resData.code === '200') {

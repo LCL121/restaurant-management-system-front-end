@@ -12,10 +12,10 @@ const state: MessageState = {
 }
 
 const mutations: MutationTree<MessageState> = {
-  showMessage(state, newData: MessageState) {
+  showMessage(state, newData: MessageProps) {
     state.status = newData.status
     state.title = newData.title
-    state.isShow = newData.isShow
+    state.isShow = true
   },
   hiddenMessage(state) {
     state.status = 'none'

@@ -1,7 +1,7 @@
 <template>
   <teleport to='#message'>
     <div class="message" :style="style">
-      <div class="message-title">message</div>
+      <div class="message-title">{{title}}</div>
       <svg
         class="icon message-icon"
         aria-hidden="true"
