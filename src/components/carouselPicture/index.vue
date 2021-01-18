@@ -1,9 +1,9 @@
 <template>
   <div
     class="carousel-picture"
-    @touchStart="touchStart"
-    @touchEnd="touchEnd"
-    @touchMove="touchMove"
+    @touchStart.passive="touchStart"
+    @touchEnd.passive="touchEnd"
+    @touchMove.passive="touchMove"
   >
     <carousel-picture-item
       v-for="(item, index) in list"

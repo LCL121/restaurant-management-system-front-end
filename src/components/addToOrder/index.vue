@@ -29,13 +29,14 @@
           type="datetime-local"
         >
       </div>
-      <div class="determine-button">确定</div>
+      <div class="determine-button" @click="addToOrder(foodId)">确定</div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, reactive } from 'vue'
+import { foodData, changePageage, changeCount, addToOrder } from './index'
 
 export default defineComponent({
   name: 'AddToOrder',
@@ -55,20 +56,6 @@ export default defineComponent({
   },
   emits: ['hidden-add-to-order'],
   setup(props, context) {
-    const foodData = reactive({
-      isPageage: false,
-      foodCount: 1,
-      takeTime: ''
-    })
-    const changePageage = () => {
-      foodData.isPageage = !foodData.isPageage
-    }
-    const changeCount = (value: number) => {
-      foodData.foodCount += value
-      if (foodData.foodCount <= 0) {
-        foodData.foodCount = 1
-      }
-    }
     const hiddenAddToOrder = () => {
       context.emit('hidden-add-to-order')
     }
@@ -77,7 +64,8 @@ export default defineComponent({
       foodData,
       changePageage,
       changeCount,
-      hiddenAddToOrder
+      hiddenAddToOrder,
+      addToOrder
     }
   }
 })
