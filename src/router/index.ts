@@ -15,6 +15,9 @@ const constantRoutes: Array<RouteRecordRaw> = [
   {
     path: '/food',
     name: 'Food',
+    meta: {
+      needStudent: true
+    },
     component: () => import(/* webpackChunkName: "food" */ '@/views/food-details/FoodDetails.vue')
   },
   {
@@ -69,6 +72,11 @@ router.beforeEach((to, from, next) => {
   } else {
     next()
   }
+})
+
+router.afterEach((to, from) => {
+  console.log('from', from.fullPath)
+  console.log('to', to.fullPath)
 })
 
 export default router

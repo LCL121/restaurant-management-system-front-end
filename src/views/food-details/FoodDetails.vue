@@ -1,6 +1,6 @@
 <template>
-  <div class="food-details" @click="goBack">
-    <div class="back">
+  <div class="food-details">
+    <div class="back" @click="goBack">
       <svg class="icon" aria-hidden="true">
         <use xlink:href="#icon-xiaoyu"></use>
       </svg>
@@ -13,19 +13,32 @@
       <div class="food-wicket"><span>窗口号：</span>{{data.wicketNumber}}号</div>
     </div>
     <div class="food-grade"><span>菜品评分：</span>{{data.grade}}</div>
-    <div class="buy">添加订单</div>
+    <div class="buy" @click="changeShowBuy(true)">添加订单</div>
+    <transition name="show-buy">
+      <add-to-order
+        v-if="isShowBuy"
+        :foodId="data.foodId"
+        :foodName="data.name"
+        :foodPrice="data.price"
+        @hidden-add-to-order="changeShowBuy(false)"
+      ></add-to-order>
+    </transition>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, reactive } from 'vue'
+import { defineComponent, onMounted, reactive, ref } from 'vue'
 import { useRoute, LocationQuery } from 'vue-router'
 import axios from 'axios'
 import { RespenseFoodDetails, Food } from '@/store/modules/recommendFood'
 import { goBack } from '@/utils/index'
+import AddToOrder from '@/components/addToOrder/index.vue'
 
 export default defineComponent({
   name: 'FoodDetails',
+  components: {
+    AddToOrder
+  },
   setup() {
     const route = useRoute()
     const data = reactive<Food>({
@@ -39,9 +52,13 @@ export default defineComponent({
       floor: 0,
       grade: '当前菜品未有人评分'
     })
+    const isShowBuy = ref(false)
     const getGrade = (grade: number) => {
       if (grade === -1) return '当前菜品未有人评分'
       return grade
+    }
+    const changeShowBuy = (isShow: boolean) => {
+      isShowBuy.value = isShow
     }
 
     onMounted(() => {
@@ -62,7 +79,9 @@ export default defineComponent({
 
     return {
       data,
-      goBack
+      goBack,
+      isShowBuy,
+      changeShowBuy
     }
   }
 })
@@ -70,4 +89,5 @@ export default defineComponent({
 
 <style scoped lang="scss">
 @import "./index.scss";
+@import "./transition.scss";
 </style>

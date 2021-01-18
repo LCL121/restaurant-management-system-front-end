@@ -1,0 +1,9 @@
+.show-buy-enter-active,
+.show-buy-leave-active {
+  transition: transform 0.8s;
+}
+
+.show-buy-enter-from,
+.show-buy-leave-to {
+  transform: translateY(-100vh)
+}

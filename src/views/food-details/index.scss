@@ -4,6 +4,7 @@ $food-buy-heigth: px2rem(80);
 
 .food-details {
   background: rgb(242, 242, 242);
+  height: 100vh;
   .back {
     position: absolute;
     margin: px2rem(10) px2rem(10);
@@ -30,7 +31,7 @@ $food-buy-heigth: px2rem(80);
     span:nth-child(2) {
       font-size: 24px;
     }
-    padding: px2rem(5) 0;
+    padding: px2rem(5) 0 px2rem(5) px2rem(5);
   }
   .food-name {
     font-size: 14px;
@@ -41,12 +42,13 @@ $food-buy-heigth: px2rem(80);
     word-break: break-all;
     background: #fff;
     padding-bottom: px2rem(5);
+    padding-left: px2rem(5);
   }
   .food-position {
     background: #fff;
     margin: px2rem(10) 0;
     div {
-      padding: px2rem(5) 0;
+      padding: px2rem(5) 0 px2rem(5) px2rem(5);
       font-size: 14px;
       color: #333;
       span {
@@ -57,7 +59,7 @@ $food-buy-heigth: px2rem(80);
   .food-grade {
     background: #fff;
     margin: px2rem(10) 0;
-    padding: px2rem(5) 0;
+    padding: px2rem(5) 0 px2rem(5) px2rem(5);
       font-size: 14px;
       color: #333;
       span {
@@ -66,13 +68,11 @@ $food-buy-heigth: px2rem(80);
   }
   .buy {
     position: fixed;
-    height: $food-buy-heigth;
     z-index: 100;
     width: 100vw;
     color: #fff;
     background: #FF0036;
     bottom: 0;
-    text-align: center;
-    line-height: $food-buy-heigth;
+    @include textCenter($food-buy-heigth);
   }
 }
