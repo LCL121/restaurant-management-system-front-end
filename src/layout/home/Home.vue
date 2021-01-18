@@ -52,6 +52,7 @@
 <script lang="ts">
 import { defineComponent, ref, computed, onMounted } from 'vue'
 import { useRoute, useRouter, LocationQuery } from 'vue-router'
+import store from '@/store'
 import { ADMIN_ROLE } from '@/utils/role'
 import { homeDOM, homeDOMEvent, bubbleList } from './ts/createBubble'
 
@@ -61,6 +62,20 @@ import { homeDOM, homeDOMEvent, bubbleList } from './ts/createBubble'
 
 export default defineComponent({
   name: 'Home',
+  beforeRouteEnter(to, from, next) {
+    store.dispatch('role/getUserInfo')
+      .then((res: number) => {
+        if (res === 0) {
+          next('/student')
+        } else if (res === 1) {
+          next('/business')
+        } else if (res === 2) {
+          next('/admin')
+        } else {
+          next()
+        }
+      })
+  },
   setup () {
     const route = useRoute()
 
