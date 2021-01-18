@@ -41,7 +41,7 @@ export default defineComponent({
   name: 'AddToOrder',
   props: {
     foodId: {
-      type: String,
+      type: Number,
       required: true
     },
     foodName: {

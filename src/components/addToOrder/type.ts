@@ -1,5 +1,5 @@
 export interface AddToOrderProps {
-  foodId: string;
+  foodId: number;
   foodName: string;
   foodPrice: number;
 }

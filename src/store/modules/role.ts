@@ -42,6 +42,16 @@ export interface RoleState {
   admin: AdminState;
 }
 
+const goToSuccess = (path: string) => {
+  store.commit('message/showMessage', {
+    status: 'success',
+    title: '登录成功，等待跳转'
+  })
+  setTimeout(() => {
+    router.push(path)
+  }, 2000)
+}
+
 const judgeGoto = (roleCode: number) => {
   if (roleCode === -1) {
     store.commit('message/showMessage', {
@@ -50,11 +60,11 @@ const judgeGoto = (roleCode: number) => {
     })
     return false
   } else if (roleCode === 0) {
-    router.push('/student')
+    goToSuccess('/student')
   } else if (roleCode === 1) {
-    router.push('/business')
+    goToSuccess('/business')
   } else if (roleCode === 2) {
-    router.push('/admin')
+    goToSuccess('/admin')
   }
   return true
 }

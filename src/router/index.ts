@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
+import { createRouter, createWebHistory, RouteRecordRaw, NavigationGuardNext } from 'vue-router'
 import store from '@/store'
 import Error404 from '@/views/error-pages/404.vue'
 import { homeRoutes, studentRoutes, businessRoutes, adminRoutes } from './routes'
@@ -41,6 +41,16 @@ const router = createRouter({
   routes: constantRoutes
 })
 
+const goToLogin = (next: NavigationGuardNext) => {
+  store.commit('message/showMessage', {
+    status: 'fail',
+    title: '请先登录，等待跳转登录页面'
+  })
+  setTimeout(() => {
+    next('/home')
+  }, 2000)
+}
+
 router.beforeEach((to, from, next) => {
   if (to.meta.needStudent) {
     store.dispatch('role/getUserInfo')
@@ -48,7 +58,7 @@ router.beforeEach((to, from, next) => {
         if (res === 0) {
           next()
         } else {
-          next('/home')
+          goToLogin(next)
         }
       })
   } else if (to.meta.needBusiness) {
@@ -57,7 +67,7 @@ router.beforeEach((to, from, next) => {
         if (res === 1) {
           next()
         } else {
-          next('/home')
+          goToLogin(next)
         }
       })
   } else if (to.meta.needAdmin) {
@@ -66,7 +76,7 @@ router.beforeEach((to, from, next) => {
         if (res === 2) {
           next()
         } else {
-          next('/home')
+          goToLogin(next)
         }
       })
   } else {
