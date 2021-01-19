@@ -11,11 +11,11 @@
       >
         <nav v-if="role !== ADMIN_ROLE">
           <router-link
-            :to="`/signin?role=${role}`"
+            :to="`/home/signin?role=${role}`"
             :class="{selected: index === 0}"
           >登录</router-link>
           <router-link
-            :to="`/signup?role=${role}`"
+            :to="`/home/signup?role=${role}`"
             :class="{selected: index === 1}"
           >注册</router-link>
         </nav>
@@ -52,6 +52,7 @@
 <script lang="ts">
 import { defineComponent, ref, computed, onMounted } from 'vue'
 import { useRoute, useRouter, LocationQuery } from 'vue-router'
+import store from '@/store'
 import { ADMIN_ROLE } from '@/utils/role'
 import { homeDOM, homeDOMEvent, bubbleList } from './ts/createBubble'
 
@@ -61,6 +62,20 @@ import { homeDOM, homeDOMEvent, bubbleList } from './ts/createBubble'
 
 export default defineComponent({
   name: 'Home',
+  beforeRouteEnter(to, from, next) {
+    store.dispatch('role/getUserInfo')
+      .then((res: number) => {
+        if (res === 0) {
+          next('/student')
+        } else if (res === 1) {
+          next('/business')
+        } else if (res === 2) {
+          next('/admin')
+        } else {
+          next()
+        }
+      })
+  },
   setup () {
     const route = useRoute()
 
@@ -71,7 +86,7 @@ export default defineComponent({
 
     const index = computed(() => {
       const layout = route.path
-      if (layout === '/signin') {
+      if (layout === '/home/signin') {
         return 0
       } else {
         return 1

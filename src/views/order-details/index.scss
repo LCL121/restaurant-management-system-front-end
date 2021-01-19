@@ -1,0 +1,126 @@
+@import "@/style/index.scss";
+
+.order-details {
+  background: #f2f2f2;
+  min-height: 100vh;
+  .title {
+    @include textCenter(px2rem(80));
+    background: #fff;
+    position: relative;
+    .back {
+      position: absolute;
+      margin: 0 px2rem(10);
+      top: 50%;
+      transform: translateY(-50%);
+      color: #fff;
+      background: rgba($color: #000000, $alpha: 0.5);
+      height: px2rem(45);
+      width: px2rem(45);
+      line-height: px2rem(45);
+      text-align: center;
+      border-radius: 50%;
+      border: none;
+    }
+  }
+  .order-details-main {
+    height: px2rem(225);
+    width: 90%;
+    background: #fff;
+    padding: px2rem(15);
+    margin: px2rem(15) auto;
+    box-sizing: border-box;
+    border-radius: 14px;
+    display: flex;
+    img {
+      height: 100%;
+    }
+    .order-details-info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      .details {
+        flex: 1;
+        padding: px2rem(10);
+        text-align: center;
+      }
+      .price {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin-right: px2rem(30);
+        span {
+          text-align: right;
+        }
+        span:first-child {
+          font-size: 15px;
+        }
+        span:last-child {
+          font-size: 13px;
+          color: #999;
+        }
+      }
+    }
+  }
+  .order-details-other {
+    width: 90%;
+    margin: px2rem(20) auto;
+    background: #fff;
+    padding: px2rem(15);
+    div {
+      padding: px2rem(10) 0 px2rem(10) px2rem(5);
+      font-size: 14px;
+      color: #333;
+      span {
+        color: #999;
+      }
+    }
+  }
+  .add-grade {
+    width: 90%;
+    margin: px2rem(20) auto;
+    background: #fff;
+    padding: px2rem(15);
+    // 清除浮动
+    overflow: auto;
+    &::after {
+      content: '.';
+      clear: both;
+      display: block;
+      width: 0;
+      height: 0;
+      visibility: hidden;
+    }
+    * {
+      padding: px2rem(10) 0 px2rem(10) px2rem(5);
+    }
+    .current-grade {
+      font-size: 14px;
+    }
+    .grade-stars {
+      .order-icon {
+        width: 7vw;
+        height: 7vw;
+      }
+    }
+    .submit-grade {
+      float: right;
+      width: px2rem(90);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: rgb(255, 80, 0);
+      border: 0.5px solid rgb(255, 80, 0);
+      border-radius: 25px;
+    }
+  }
+  .order-details-button {
+    position: fixed;
+    z-index: 100;
+    width: 100vw;
+    color: #fff;
+    background: #FF0036;
+    bottom: 0;
+    @include textCenter(px2rem(80));
+  }
+}

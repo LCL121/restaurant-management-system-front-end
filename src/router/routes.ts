@@ -1,14 +1,35 @@
-import axios, { AxiosResponse } from 'axios'
 import { RouteRecordRaw } from 'vue-router'
-import router from './index'
-import store from '@/store'
+import Home from '@/layout/home/Home.vue'
 import Student from '@/layout/student/Student.vue'
-import Business from '@/layout/business/Business.vue'
 import Admin from '@/layout/admin/Admin.vue'
-
+import Business from '@/layout/business/Business.vue'
 import { STUDENT_ROLE, BUSINESS_ROLE, ADMIN_ROLE } from '@/utils/role'
 
-export const studentRoute: RouteRecordRaw = {
+export const homeRoutes: RouteRecordRaw = {
+  path: '/home',
+  name: 'Home',
+  component: Home,
+  redirect: {
+    name: 'SignIn',
+    query: {
+      role: STUDENT_ROLE
+    }
+  },
+  children: [
+    {
+      path: 'signin',
+      name: 'SignIn',
+      component: () => import(/* webpackChunkName: "signin" */ '@/views/signin/SignIn.vue')
+    },
+    {
+      path: 'signup',
+      name: 'SignUp',
+      component: () => import(/* webpackChunkName: "signup" */ '@/views/signup/SignUp.vue')
+    }
+  ]
+}
+
+export const studentRoutes: RouteRecordRaw = {
   path: '/student',
   name: 'Student',
   component: Student,
@@ -22,12 +43,10 @@ export const studentRoute: RouteRecordRaw = {
     {
       path: 'student-details',
       name: 'StudentDetails',
+      meta: {
+        needStudent: true
+      },
       component: () => import(/* webpackChunkName: "student-details" */ '@/views/student-details/StudentDetails.vue')
-    },
-    {
-      path: 'student-search',
-      name: 'StudentSearch',
-      component: () => import(/* webpackChunkName: "student-search" */ '@/views/student-search/StudentSearch.vue')
     },
     {
       path: 'food-sort',
@@ -37,14 +56,20 @@ export const studentRoute: RouteRecordRaw = {
     {
       path: 'order-page',
       name: 'OrderPage',
+      meta: {
+        needStudent: true
+      },
       component: () => import(/* webpackChunkName: "order-page" */ '@/views/order-page/OrderPage.vue')
     }
   ]
 }
 
-export const businessRoute: RouteRecordRaw = {
+export const businessRoutes: RouteRecordRaw = {
   path: '/business',
   name: 'Business',
+  meta: {
+    needBusiness: true
+  },
   component: Business,
   redirect: '/business/business-home',
   children: [
@@ -61,10 +86,13 @@ export const businessRoute: RouteRecordRaw = {
   ]
 }
 
-export const adminRoute: RouteRecordRaw = {
+export const adminRoutes: RouteRecordRaw = {
   path: '/admin',
   name: 'Admin',
   component: Admin,
+  meta: {
+    needAdmin: true
+  },
   redirect: '/admin/admin-home',
   children: [
     {
@@ -79,50 +107,3 @@ export const adminRoute: RouteRecordRaw = {
     }
   ]
 }
-
-const other: Array<RouteRecordRaw> = [
-  {
-    path: '/404',
-    name: '404',
-    component: () => import(/* webpackChunkName: "404" */ '@/views/error-pages/404.vue')
-  },
-  {
-    path: '/:pathMatch(.*)*',
-    redirect: '/404'
-  }
-]
-
-let res: AxiosResponse
-
-router.beforeEach(async (to, from, next) => {
-  if (!res) {
-    res = await store.dispatch('role/getStudentInfo')
-    if (res.status === 200) {
-      const role = res.data.data.role
-      switch (role) {
-        case STUDENT_ROLE:
-          router.addRoute(studentRoute)
-          break
-        case BUSINESS_ROLE:
-          router.addRoute(businessRoute)
-          break
-        case ADMIN_ROLE:
-          router.addRoute(adminRoute)
-          break
-      }
-      other.forEach(item => {
-        router.addRoute(item)
-      })
-      next({ ...to })
-    } else {
-      next({ ...to, path: '/' })
-    }
-  } else {
-    next()
-  }
-})
-
-router.afterEach((to) => {
-  console.log(router.getRoutes())
-  console.log(`${to.fullPath} 路由跳转成功!`)
-})

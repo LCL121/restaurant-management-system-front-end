@@ -6,13 +6,9 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import store from '@/store'
 
 export default defineComponent({
-  name: '404',
-  mounted () {
-    console.log(store.state)
-  }
+  name: '404'
 })
 </script>
 

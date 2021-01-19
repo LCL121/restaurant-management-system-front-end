@@ -1,30 +1,33 @@
 <template>
   <div class="student">
-    <div class="student-search">
-      <svg
-        class="icon icon-search"
-        aria-hidden="true"
-      >
-        <use xlink:href="#icon-search"></use>
-      </svg>
-    </div>
-    <nav class="student-nav">nav</nav>
-    <div class="student-detail">
-      <div class="student-list">list</div>
-      <router-view class="student-view" />
-    </div>
+    <student-global-header></student-global-header>
+    <router-view class="student-main-view"/>
+    <student-global-footer></student-global-footer>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import StudentGlobalHeader from '@/components/studentGlobalHeader/index.vue'
+import StudentGlobalFooter from '@/components/studentGlobalFooter/index.vue'
 
 export default defineComponent({
-  name: 'Student'
+  name: 'Student',
+  components: {
+    StudentGlobalHeader,
+    StudentGlobalFooter
+  }
 })
 </script>
 
 <style scoped lang="scss">
-@import "./style/pc.scss";
-@import "./style/mobile.scss";
+@import "@/style/index.scss";
+
+.student {
+  width: 100vw;
+  .student-main-view {
+    margin-top: $student-header-height;
+    margin-bottom: $student-footer-height;
+  }
+}
 </style>

@@ -35,11 +35,11 @@
     </div>
     <router-link
       v-if="role === STUDENT_ROLE"
-      to="/signin?role=business"
+      to="/home/signin?role=business"
     >商家登录</router-link>
     <router-link
       v-else
-      to="/signin?role=student"
+      to="/home/signin?role=student"
     >学生登录</router-link>
   </form>
 </template>
@@ -66,7 +66,10 @@ export default defineComponent({
     const inputs: Inputs = getAccountInputInfo(role.value)
 
     const signIn = () => {
-      operateSignIn(router, role.value)
+      operateSignIn(router, role.value, {
+        id: inputs.accountNumber,
+        password: inputs.password
+      })
     }
 
     // 进一步登录页面权限控制
