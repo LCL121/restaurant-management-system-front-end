@@ -31,7 +31,7 @@ import { defineComponent, onMounted, reactive, ref } from 'vue'
 import { useRoute, LocationQuery } from 'vue-router'
 import axios from 'axios'
 import { RespenseFoodDetails, Food } from '@/store/modules/recommendFood'
-import { goBack } from '@/utils/index'
+import { goBack, createMessage } from '@/utils/index'
 import AddToOrder from '@/components/addToOrder/index.vue'
 
 export default defineComponent({
@@ -74,6 +74,9 @@ export default defineComponent({
           data.wicketNumber = resData.wicketNumber
           data.floor = resData.floor
           data.grade = getGrade(resData.grade as number)
+        })
+        .catch(() => {
+          createMessage('fail', '获取数据失败')
         })
     })
 

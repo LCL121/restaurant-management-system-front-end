@@ -1,14 +1,12 @@
 import { reactive } from 'vue'
 import axios, { AxiosResponse } from 'axios'
 import { OrderListItemProps } from '@/components/orderListitem/type'
+import { createMessage } from '@/utils/index'
+import { ResponseCommon } from '@/utils/type'
 
 type OrderDataList = OrderListItemProps[]
 
-type ResponseOrderList = AxiosResponse<{
-  code: string;
-  data: OrderDataList | null;
-  msg: string;
-}>
+type ResponseOrderList = ResponseCommon<OrderDataList | null>
 
 export const orderList = reactive<OrderDataList>([])
 
@@ -28,7 +26,12 @@ export const getData = () => {
             isComplete: item.isComplete
           })
         })
+      } else {
+        createMessage('fail', '获取数据失败')
       }
+    })
+    .catch(() => {
+      createMessage('fail', '获取数据失败')
     })
 }
 

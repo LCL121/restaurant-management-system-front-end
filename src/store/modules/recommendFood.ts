@@ -1,6 +1,8 @@
 import { GetterTree, ActionTree, MutationTree } from 'vuex'
-import axios, { AxiosResponse } from 'axios'
+import axios from 'axios'
 import { RootState } from '@/store/type'
+import { createMessage } from '@/utils/index'
+import { ResponseCommon } from '@/utils/type'
 
 export interface Food {
   foodId: number;
@@ -14,19 +16,11 @@ export interface Food {
   grade?: number | string;
 }
 
-export type RespenseFoodDetails = AxiosResponse<{
-  code: string;
-  msg: string;
-  data: Food;
-}>
+export type RespenseFoodDetails = ResponseCommon<Food>
 
 export type FoodList = Food[]
 
-export type RespenseFoodList = AxiosResponse<{
-  code: string;
-  msg: string;
-  data: FoodList | null;
-}>
+export type RespenseFoodList = ResponseCommon<FoodList | null>
 
 export interface FoodState {
   foodList: FoodList;
@@ -79,7 +73,12 @@ const actions: ActionTree<FoodState, RootState> = {
               commit('addCurrentPage')
               commit('fetchFoodList', res.data.data)
             }
+          } else {
+            createMessage('fail', '获取订单列表失败')
           }
+        })
+        .catch(e => {
+          createMessage('fail', '获取订单列表失败')
         })
         .finally(() => {
           commit('changePendingState', false)

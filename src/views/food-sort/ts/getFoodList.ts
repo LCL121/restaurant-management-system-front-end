@@ -1,7 +1,8 @@
 import { reactive } from 'vue'
 import axios from 'axios'
-import { FoodList, RespenseFoodList } from '@/store/modules/recommendFood'
+import { RespenseFoodList } from '@/store/modules/recommendFood'
 import { FoodListModelProps } from '@/components/foodListModel/type'
+import { createMessage } from '@/utils/index'
 
 export const foodListModelProps = reactive<FoodListModelProps>([])
 
@@ -35,6 +36,7 @@ export const getFoodList = async (
         }
       }
     } else {
+      createMessage('fail', '获取数据失败')
       return {
         isFinished: false,
         msg: data.msg
@@ -64,6 +66,7 @@ export const getFoodList = async (
         }
       }
     } else {
+      createMessage('fail', '获取数据失败')
       return {
         isFinished: false,
         msg: data.msg

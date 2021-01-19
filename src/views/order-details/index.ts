@@ -90,10 +90,13 @@ export const sumbitGrade = (grade: number, orderId: number, path: string) => {
     grade,
     orderId
   }))
-    .then(res => {
+    .then(() => {
       createMessage('success', '提交成功，等待刷新')
       setTimeout(() => {
         refresh()
       }, 2000)
+    })
+    .catch(() => {
+      createMessage('fail', '提交失败')
     })
 }

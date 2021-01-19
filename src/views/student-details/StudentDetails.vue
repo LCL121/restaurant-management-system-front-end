@@ -15,6 +15,7 @@ import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
 import { RootState } from '@/store/type'
 import { STUDENT_ROLE } from '@/utils/role'
+import { createMessage } from '@/utils/index'
 
 export default defineComponent({
   name: 'StudentDetails',
@@ -32,7 +33,9 @@ export default defineComponent({
       store.dispatch('role/logout', studentEmail.value)
         .then((res: boolean) => {
           if (res) {
-            router.push('/home')
+            createMessage('success', '成功退出，等待跳转', '/home')
+          } else {
+            createMessage('fail', '退出失败')
           }
         })
     }

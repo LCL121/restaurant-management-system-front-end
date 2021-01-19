@@ -1,11 +1,9 @@
-import axios, { AxiosResponse } from 'axios'
+import axios from 'axios'
 import { ActionTree, Commit, MutationTree } from 'vuex'
 import qs from 'qs'
 import { RootState } from '@/store/type'
-import { STUDENT_ROLE, BUSINESS_ROLE, ADMIN_ROLE } from '@/utils/role'
+import { STUDENT_ROLE } from '@/utils/role'
 import { ResponseCommon } from '@/utils/type'
-import router from '@/router'
-import store from '@/store'
 import { createMessage } from '@/utils/index'
 
 interface StudentInfo {
@@ -15,11 +13,7 @@ interface StudentInfo {
   role: number;
 }
 
-type ResponseRoleInfo = AxiosResponse<{
-  code: string;
-  data: StudentInfo | null;
-  msg: string;
-}>
+type ResponseRoleInfo = ResponseCommon<StudentInfo | null>
 
 interface StudentState {
   studentNumber: string;
@@ -87,12 +81,13 @@ const actions: ActionTree<RoleState, RootState> = {
       }
       return -1
     } else {
+      // createMessage('fail', '获取用户信息失败')
       commit('clearStudentInfo')
       return -1
     }
   },
-  async signIn({ state, dispatch, commit }, data) {
-    const res: ResponseCommon<any> = await axios.post('/api/dbcourse/user/login', qs.stringify(data))
+  async signIn({ dispatch }, data) {
+    const res: ResponseCommon<null> = await axios.post('/api/dbcourse/user/login', qs.stringify(data))
     const resData = res.data
     if (resData.code === '200') {
       const roleCode: number = await dispatch('getUserInfo')
@@ -102,18 +97,23 @@ const actions: ActionTree<RoleState, RootState> = {
       const roleCode: number = await dispatch('getUserInfo')
       return judgeGoto(roleCode)
     } else {
+      createMessage('fail', '登录失败')
       return false
     }
   },
   signUp({ state }, data) {
     console.log(data)
     axios.post('/api/dbcourse/user/register', qs.stringify(data))
-      .then(res => {
-        console.log(res)
+      .then((res: ResponseCommon<null>) => {
+        if (res.data.code === '200') {
+          createMessage('success', '注册成功，等待跳转', '/home')
+        } else {
+          createMessage('fail', '注册失败')
+        }
       })
   },
-  async logout({ commit }, email) {
-    const res: ResponseCommon<any> = await axios.get(`/api/dbcourse/user/logout?email=${email}`)
+  async logout({ state }, email) {
+    const res: ResponseCommon<null> = await axios.get(`/api/dbcourse/user/logout?email=${email}`)
     const data = res.data
     if (data.code === '200') {
       return true

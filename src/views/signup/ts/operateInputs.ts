@@ -5,6 +5,7 @@ import { STUDENT_ROLE, BUSINESS_ROLE } from '@/utils/role'
 import axios from 'axios'
 import store from '@/store'
 import { createMessage } from '@/utils/index'
+import { ResponseCommon } from '@/utils/type'
 
 interface InputDOMStatus {
   (): boolean;
@@ -43,11 +44,17 @@ export const operateSendCode = (data: Inputs) => {
     return
   }
   if (emailStatus()) {
-    createMessage('success', '发送成功，请等待')
     codeButtonText.value = '60秒后重发'
     axios.get(`/api/dbcourse/user/getCode?email=${data.value}`)
-      .then(res => {
-        console.log(res)
+      .then((res: ResponseCommon<null>) => {
+        if (res.data.code === '200') {
+          createMessage('success', '发送成功，请等待')
+        } else {
+          createMessage('fail', '发送失败')
+        }
+      })
+      .catch(() => {
+        createMessage('fail', '获取数据失败')
       })
     setTimeout(countDown, 1000)
   } else {
