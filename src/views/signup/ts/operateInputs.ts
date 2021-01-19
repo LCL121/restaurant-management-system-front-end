@@ -4,6 +4,7 @@ import { Inputs, data as inputDatas } from './initInputs'
 import { STUDENT_ROLE, BUSINESS_ROLE } from '@/utils/role'
 import axios from 'axios'
 import store from '@/store'
+import { createMessage } from '@/utils/index'
 
 interface InputDOMStatus {
   (): boolean;
@@ -38,17 +39,19 @@ const countDown = () => {
 
 export const operateSendCode = (data: Inputs) => {
   if (codeButtonText.value !== '获取验证码') {
-    console.log('已发送，请等待')
+    createMessage('fail', '已发送，请等待')
     return
   }
   if (emailStatus()) {
-    console.log('email 已经填写')
+    createMessage('success', '发送成功，请等待')
     codeButtonText.value = '60秒后重发'
     axios.get(`/api/dbcourse/user/getCode?email=${data.value}`)
       .then(res => {
         console.log(res)
       })
     setTimeout(countDown, 1000)
+  } else {
+    createMessage('fail', '请填写email')
   }
 }
 
