@@ -2,6 +2,7 @@ import { reactive } from 'vue'
 import axios from 'axios'
 import qs from 'qs'
 import { createMessage } from '@/utils/index'
+import { ResponseAddToOrder } from './type'
 
 export const foodData = reactive({
   isPageage: false,
@@ -46,7 +47,14 @@ export const addToOrder = (foodId: number) => {
     number: foodData.foodCount,
     takeTime: `${foodData.takeTime.replace('T', ' ')}:00`
   }))
-    .then(res => {
-      console.log(res)
+    .then((res: ResponseAddToOrder) => {
+      if (res.data.code === '200') {
+        createMessage('success', '订单添加成功，等待跳转', '/student/order-page')
+      } else {
+        createMessage('fail', '订单添加失败')
+      }
+    })
+    .catch(e => {
+      createMessage('fail', '订单添加失败')
     })
 }

@@ -92,7 +92,7 @@ const actions: ActionTree<RoleState, RootState> = {
     }
   },
   async signIn({ state, dispatch, commit }, data) {
-    const res: ResponseCommon = await axios.post('/api/dbcourse/user/login', qs.stringify(data))
+    const res: ResponseCommon<any> = await axios.post('/api/dbcourse/user/login', qs.stringify(data))
     const resData = res.data
     if (resData.code === '200') {
       const roleCode: number = await dispatch('getUserInfo')
@@ -113,7 +113,7 @@ const actions: ActionTree<RoleState, RootState> = {
       })
   },
   async logout({ commit }, email) {
-    const res: ResponseCommon = await axios.get(`/api/dbcourse/user/logout?email=${email}`)
+    const res: ResponseCommon<any> = await axios.get(`/api/dbcourse/user/logout?email=${email}`)
     const data = res.data
     if (data.code === '200') {
       return true

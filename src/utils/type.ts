@@ -1,7 +1,7 @@
 import { AxiosResponse } from 'axios'
 
-export type ResponseCommon = AxiosResponse<{
+export type ResponseCommon<T> = AxiosResponse<{
   code: string;
-  data: any;
+  data: T;
   msg: string;
 }>

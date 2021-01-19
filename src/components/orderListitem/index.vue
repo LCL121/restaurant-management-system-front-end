@@ -4,15 +4,14 @@
       <img :src="foodImg" :alt="foodName">
       <div class="details">
         <span>{{foodName}}</span>
-        <span>预取：{{takeTime}}</span>
+        <span>预取时间<br/>{{takeTime}}</span>
       </div>
       <div class="price">
         <span>￥{{totalPrice}}</span>
         <span>x{{number}}</span>
       </div>
     </div>
-    <div v-if="isComplete" class="food-score completed">评分</div>
-    <div v-else class="food-score uncompleted">未完成</div>
+    <div class="food-score">{{isComplete ? '已完成' : '未完成'}}</div>
   </div>
 </template>
 

@@ -22,6 +22,14 @@ const constantRoutes: Array<RouteRecordRaw> = [
     component: () => import(/* webpackChunkName: "food" */ '@/views/food-details/FoodDetails.vue')
   },
   {
+    path: '/order-details',
+    name: 'OrderDetails',
+    meta: {
+      needStudent: true
+    },
+    component: () => import(/* webpackChunkName: "order-details" */ '@/views/order-details/OrderDetails.vue')
+  },
+  {
     path: '/about',
     name: 'About',
     component: () => import(/* webpackChunkName: "about" */ '@/views/about/About.vue')

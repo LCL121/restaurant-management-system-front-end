@@ -3,11 +3,16 @@ import store from '@/store'
 import { MessageStatus } from '@/components/message/type'
 
 export const goTo = (path: string) => {
+  console.log(path)
   router.push(path)
 }
 
 export const goBack = () => {
   router.go(-1)
+}
+
+export const refresh = () => {
+  router.go(0)
 }
 
 export const createMessage = (status: MessageStatus, title: string, path?: string) => {

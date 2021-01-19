@@ -9,6 +9,7 @@
       :takeTime="item.takeTime"
       :totalPrice="item.totalPrice"
       :isComplete="item.isComplete"
+      @click="goTo(`/order-details?orderId=${item.orderId}`)"
     ></order-list-item>
   </div>
 </template>
@@ -17,6 +18,7 @@
 import { defineComponent, onMounted, onUnmounted } from 'vue'
 import { getData, orderList, clearData } from './index'
 import OrderListItem from '@/components/orderListitem/index.vue'
+import { goTo } from '@/utils/index'
 
 export default defineComponent({
   name: 'OrderPage',
@@ -33,7 +35,8 @@ export default defineComponent({
     })
 
     return {
-      orderList
+      orderList,
+      goTo
     }
   }
 })
