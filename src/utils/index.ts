@@ -3,7 +3,6 @@ import store from '@/store'
 import { MessageStatus } from '@/components/message/type'
 
 export const goTo = (path: string) => {
-  console.log(path)
   router.push(path)
 }
 

@@ -70,14 +70,14 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, ref, computed } from 'vue'
+import { defineComponent, ref, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { goBack, goTo } from '@/utils/index'
 import { orderData, getOrderData, deleteOrder, getGrade, sumbitGrade } from './index'
 
 export default defineComponent({
   name: 'OrderDetails',
-  setup(props) {
+  setup() {
     const route = useRoute()
     const orderId = route.query.orderId as unknown as number
     const deleteFuc = () => {
@@ -96,7 +96,7 @@ export default defineComponent({
       currentGrade.value = index
     }
     const sumbitGradeFuc = () => {
-      sumbitGrade(currentGrade.value, orderId, route.fullPath)
+      sumbitGrade(currentGrade.value, orderId)
     }
 
     getOrderData(orderId)

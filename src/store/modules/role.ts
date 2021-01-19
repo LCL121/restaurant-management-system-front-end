@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { ActionTree, Commit, MutationTree } from 'vuex'
+import { ActionTree, MutationTree } from 'vuex'
 import qs from 'qs'
 import { RootState } from '@/store/type'
 import { STUDENT_ROLE } from '@/utils/role'
@@ -102,7 +102,6 @@ const actions: ActionTree<RoleState, RootState> = {
     }
   },
   signUp({ state }, data) {
-    console.log(data)
     axios.post('/api/dbcourse/user/register', qs.stringify(data))
       .then((res: ResponseCommon<null>) => {
         if (res.data.code === '200') {
@@ -132,7 +131,7 @@ const mutations: MutationTree<RoleState> = {
     state.student.name = data.name
     state.student.studentNumber = data.id
   },
-  clearStudentInfo(state, data) {
+  clearStudentInfo(state) {
     state.belong = ''
     state.student.email = ''
     state.student.name = ''

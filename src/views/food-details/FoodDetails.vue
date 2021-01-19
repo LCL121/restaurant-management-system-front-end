@@ -28,7 +28,7 @@
 
 <script lang="ts">
 import { defineComponent, onMounted, reactive, ref } from 'vue'
-import { useRoute, LocationQuery } from 'vue-router'
+import { useRoute } from 'vue-router'
 import axios from 'axios'
 import { RespenseFoodDetails, Food } from '@/store/modules/recommendFood'
 import { goBack, createMessage } from '@/utils/index'

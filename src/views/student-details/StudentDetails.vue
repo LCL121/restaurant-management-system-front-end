@@ -12,16 +12,13 @@
 <script lang="ts">
 import { defineComponent, computed } from 'vue'
 import { useStore } from 'vuex'
-import { useRouter } from 'vue-router'
 import { RootState } from '@/store/type'
-import { STUDENT_ROLE } from '@/utils/role'
 import { createMessage } from '@/utils/index'
 
 export default defineComponent({
   name: 'StudentDetails',
   setup() {
     const store = useStore<RootState>()
-    const router = useRouter()
     const studentName = computed(() => store.state.role.student.name)
     const studentEmail = computed(() => store.state.role.student.email)
     const studentNumber = computed(() => {

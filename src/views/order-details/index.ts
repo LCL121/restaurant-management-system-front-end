@@ -81,7 +81,7 @@ export const getGrade = (grade: number) => {
   return grade
 }
 
-export const sumbitGrade = (grade: number, orderId: number, path: string) => {
+export const sumbitGrade = (grade: number, orderId: number) => {
   if (grade <= 0) {
     createMessage('fail', '评分不能为空')
     return

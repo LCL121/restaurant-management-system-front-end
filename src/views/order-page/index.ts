@@ -1,5 +1,5 @@
 import { reactive } from 'vue'
-import axios, { AxiosResponse } from 'axios'
+import axios from 'axios'
 import { OrderListItemProps } from '@/components/orderListitem/type'
 import { createMessage } from '@/utils/index'
 import { ResponseCommon } from '@/utils/type'

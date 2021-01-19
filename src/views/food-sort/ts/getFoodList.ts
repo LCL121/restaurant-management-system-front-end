@@ -2,7 +2,6 @@ import { reactive } from 'vue'
 import axios from 'axios'
 import { RespenseFoodList } from '@/store/modules/recommendFood'
 import { FoodListModelProps } from '@/components/foodListModel/type'
-import { createMessage } from '@/utils/index'
 
 export const foodListModelProps = reactive<FoodListModelProps>([])
 
@@ -16,27 +15,29 @@ export const getFoodList = async (
     const res: RespenseFoodList = await axios.get(`/api/dbcourse/food/getByWindowId?floor=${floor}&wicketNumber=${wicketNumber}&page=${page}&size=${size}`)
     const data = res.data
     if (data.code === '200') {
-      if (data.data!.length) {
-        data.data!.map(item => {
-          foodListModelProps.push({
-            foodId: item.foodId,
-            imgSrc: item.image || require('@/assets/food_default_image.png'),
-            foodName: item.name,
-            foodPrice: item.price
+      const resData = data.data
+      if (resData) {
+        if (resData.length) {
+          resData.map(item => {
+            foodListModelProps.push({
+              foodId: item.foodId,
+              imgSrc: item.image || require('@/assets/food_default_image.png'),
+              foodName: item.name,
+              foodPrice: item.price
+            })
           })
-        })
-        return {
-          isFinished: false,
-          msg: data.msg
-        }
-      } else {
-        return {
-          isFinished: true,
-          msg: data.msg
+          return {
+            isFinished: false,
+            msg: data.msg
+          }
+        } else {
+          return {
+            isFinished: true,
+            msg: data.msg
+          }
         }
       }
     } else {
-      createMessage('fail', '获取数据失败')
       return {
         isFinished: false,
         msg: data.msg
@@ -46,27 +47,29 @@ export const getFoodList = async (
     const res: RespenseFoodList = await axios.get(`/api/dbcourse/food/getByFloor?floor=${floor}&page=${page}&size=${size}`)
     const data = res.data
     if (data.code === '200') {
-      if (data.data!.length) {
-        data.data!.map(item => {
-          foodListModelProps.push({
-            foodId: item.foodId,
-            imgSrc: item.image || require('@/assets/food_default_image.png'),
-            foodName: item.name,
-            foodPrice: item.price
+      const resData = data.data
+      if (resData) {
+        if (resData.length) {
+          resData.map(item => {
+            foodListModelProps.push({
+              foodId: item.foodId,
+              imgSrc: item.image || require('@/assets/food_default_image.png'),
+              foodName: item.name,
+              foodPrice: item.price
+            })
           })
-        })
-        return {
-          isFinished: false,
-          msg: data.msg
-        }
-      } else {
-        return {
-          isFinished: true,
-          msg: data.msg
+          return {
+            isFinished: false,
+            msg: data.msg
+          }
+        } else {
+          return {
+            isFinished: true,
+            msg: data.msg
+          }
         }
       }
     } else {
-      createMessage('fail', '获取数据失败')
       return {
         isFinished: false,
         msg: data.msg

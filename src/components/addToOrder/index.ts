@@ -54,7 +54,7 @@ export const addToOrder = (foodId: number) => {
         createMessage('fail', '订单添加失败')
       }
     })
-    .catch(e => {
+    .catch(() => {
       createMessage('fail', '订单添加失败')
     })
 }

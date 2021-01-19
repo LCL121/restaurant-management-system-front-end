@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory, RouteRecordRaw, NavigationGuardNext } from 'vue-router'
+import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import store from '@/store'
 import Error404 from '@/views/error-pages/404.vue'
 import { homeRoutes, studentRoutes, businessRoutes, adminRoutes } from './routes'
