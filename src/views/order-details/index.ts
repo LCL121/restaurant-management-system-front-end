@@ -69,7 +69,7 @@ export const deleteOrder = (orderId: number) => {
         createMessage('fail', '订单删除失败')
       }
     })
-    .catch(e => {
+    .catch(() => {
       createMessage('fail', '订单删除失败')
     })
 }
@@ -90,11 +90,15 @@ export const sumbitGrade = (grade: number, orderId: number, path: string) => {
     grade,
     orderId
   }))
-    .then(() => {
-      createMessage('success', '提交成功，等待刷新')
-      setTimeout(() => {
-        refresh()
-      }, 2000)
+    .then((res: ResponseCommon<null>) => {
+      if (res.data.code === '200') {
+        createMessage('success', '提交成功，等待刷新')
+        setTimeout(() => {
+          refresh()
+        }, 2000)
+      } else {
+        createMessage('fail', '提交失败')
+      }
     })
     .catch(() => {
       createMessage('fail', '提交失败')

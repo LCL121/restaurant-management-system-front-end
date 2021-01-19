@@ -74,11 +74,11 @@ const actions: ActionTree<FoodState, RootState> = {
               commit('fetchFoodList', res.data.data)
             }
           } else {
-            createMessage('fail', '获取订单列表失败')
+            createMessage('fail', '获取数据失败')
           }
         })
-        .catch(e => {
-          createMessage('fail', '获取订单列表失败')
+        .catch(() => {
+          createMessage('fail', '获取数据失败')
         })
         .finally(() => {
           commit('changePendingState', false)

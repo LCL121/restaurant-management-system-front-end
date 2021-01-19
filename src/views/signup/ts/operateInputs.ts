@@ -54,7 +54,7 @@ export const operateSendCode = (data: Inputs) => {
         }
       })
       .catch(() => {
-        createMessage('fail', '获取数据失败')
+        createMessage('fail', '发送失败')
       })
     setTimeout(countDown, 1000)
   } else {

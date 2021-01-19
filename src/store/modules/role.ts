@@ -81,7 +81,7 @@ const actions: ActionTree<RoleState, RootState> = {
       }
       return -1
     } else {
-      // createMessage('fail', '获取用户信息失败')
+      // createMessage('fail', '获取数据失败')
       commit('clearStudentInfo')
       return -1
     }
@@ -110,6 +110,9 @@ const actions: ActionTree<RoleState, RootState> = {
         } else {
           createMessage('fail', '注册失败')
         }
+      })
+      .catch(() => {
+        createMessage('fail', '注册失败')
       })
   },
   async logout({ state }, email) {

@@ -50,10 +50,6 @@ const router = createRouter({
   routes: constantRoutes
 })
 
-const goToLogin = (next: NavigationGuardNext) => {
-  createMessage('fail', '请先登录，等待跳转登录页面', '/home')
-}
-
 router.beforeEach((to, from, next) => {
   if (to.meta.needStudent) {
     store.dispatch('role/getUserInfo')
@@ -61,7 +57,7 @@ router.beforeEach((to, from, next) => {
         if (res === 0) {
           next()
         } else {
-          goToLogin(next)
+          createMessage('fail', '请先登录，等待跳转登录页面', '/home')
         }
       })
   } else if (to.meta.needBusiness) {
@@ -70,7 +66,7 @@ router.beforeEach((to, from, next) => {
         if (res === 1) {
           next()
         } else {
-          goToLogin(next)
+          createMessage('fail', '请先登录，等待跳转登录页面', '/home')
         }
       })
   } else if (to.meta.needAdmin) {
@@ -79,7 +75,7 @@ router.beforeEach((to, from, next) => {
         if (res === 2) {
           next()
         } else {
-          goToLogin(next)
+          createMessage('fail', '请先登录，等待跳转登录页面', '/home')
         }
       })
   } else {
