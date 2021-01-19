@@ -8,14 +8,22 @@ export const foodData = reactive({
   foodCount: 1,
   takeTime: ''
 })
+
 export const changePageage = () => {
   foodData.isPageage = !foodData.isPageage
 }
+
 export const changeCount = (value: number) => {
   foodData.foodCount += value
   if (foodData.foodCount <= 0) {
     foodData.foodCount = 1
   }
+}
+
+export const clearData = () => {
+  foodData.foodCount = 1
+  foodData.isPageage = false
+  foodData.takeTime = ''
 }
 
 export const addToOrder = (foodId: number) => {
@@ -36,7 +44,7 @@ export const addToOrder = (foodId: number) => {
     foodId: foodId,
     isPackage: foodData.isPageage ? 1 : 0,
     number: foodData.foodCount,
-    takeTime: foodData.takeTime
+    takeTime: `${foodData.takeTime.replace('T', ' ')}:00`
   }))
     .then(res => {
       console.log(res)

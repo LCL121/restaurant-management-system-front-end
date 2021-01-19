@@ -35,8 +35,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive } from 'vue'
-import { foodData, changePageage, changeCount, addToOrder } from './index'
+import { defineComponent, reactive, onUnmounted, onMounted } from 'vue'
+import { foodData, changePageage, changeCount, addToOrder, clearData } from './index'
 
 export default defineComponent({
   name: 'AddToOrder',
@@ -59,6 +59,10 @@ export default defineComponent({
     const hiddenAddToOrder = () => {
       context.emit('hidden-add-to-order')
     }
+
+    onMounted(() => {
+      clearData()
+    })
 
     return {
       foodData,
