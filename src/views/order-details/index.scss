@@ -82,7 +82,7 @@
     background: #fff;
     padding: px2rem(15);
     // 清除浮动
-    overflow: auto;
+    // overflow: auto;
     &::after {
       content: '.';
       clear: both;
