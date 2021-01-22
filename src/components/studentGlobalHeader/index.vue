@@ -1,5 +1,5 @@
 <template>
-  <header class="student-global-nav">餐厅管理系统</header>
+  <header class="student-global-nav">食堂管理系统</header>
 </template>
 
 <script lang="ts">
