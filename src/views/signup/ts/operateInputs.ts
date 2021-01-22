@@ -61,6 +61,12 @@ export const operateSendCode = (data: Inputs) => {
   }
 }
 
+export const judgePasswordSame = (data: Inputs[], index: number) => {
+  if (index === 2 && data[1].value !== data[2].value) {
+    createMessage('fail', '密码填写不相同')
+  }
+}
+
 export const operateSignUp = async (router: Router, role: string | null, data: Inputs[]) => {
   if (emailStatus() && passwordStatus() && confirmStatus() && codeStatus()) {
     console.log('sign up 已经全部填写')
@@ -80,6 +86,8 @@ export const operateSignUp = async (router: Router, role: string | null, data: I
       //   console.error(new Error('role 发生错误！'))
       //   router.push({ name: 'SignIn', query: { role: STUDENT_ROLE } })
       // }
+    } else {
+      createMessage('fail', '密码填写不相同')
     }
   }
 }

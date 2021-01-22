@@ -19,6 +19,7 @@
         required
         :ref="item.refDom"
         v-model="item.value"
+        @blur="judgePasswordSame(data, index)"
       >
       <button
         v-if="item.id === 'codeId'"
@@ -44,7 +45,8 @@ import {
   codeDOM,
   operateSendCode,
   operateSignUp,
-  codeButtonText
+  codeButtonText,
+  judgePasswordSame
 } from './ts/operateInputs'
 
 export default defineComponent({
@@ -86,7 +88,8 @@ export default defineComponent({
       confirmDOM,
       codeDOM,
       sendCode,
-      codeButtonText
+      codeButtonText,
+      judgePasswordSame
     }
   }
 })

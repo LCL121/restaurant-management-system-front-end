@@ -104,10 +104,12 @@ const actions: ActionTree<RoleState, RootState> = {
   signUp({ state }, data) {
     axios.post('/api/dbcourse/user/register', qs.stringify(data))
       .then((res: ResponseCommon<null>) => {
-        if (res.data.code === '200') {
+        console.log(res)
+        const code = res.data.code
+        if (code === '200') {
           createMessage('success', '注册成功，等待跳转', '/home')
         } else {
-          createMessage('fail', '注册失败')
+          createMessage('fail', res.data.msg || '注册失败')
         }
       })
       .catch(() => {
