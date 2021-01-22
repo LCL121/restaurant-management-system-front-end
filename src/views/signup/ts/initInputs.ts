@@ -15,7 +15,7 @@ export const data = reactive<Inputs[]>([
     id: 'emailId',
     placeholder: '邮箱',
     refDom: 'emailDOM',
-    value: '1391436522@qq.com'
+    value: ''
   },
   {
     type: 'password',
@@ -23,7 +23,7 @@ export const data = reactive<Inputs[]>([
     placeholder: '密码 8-16位，包含大小写字母、数字',
     pattern: '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[^]{8,16}$',
     refDom: 'passwordDOM',
-    value: '123abcABC'
+    value: ''
   },
   {
     type: 'password',
@@ -31,7 +31,7 @@ export const data = reactive<Inputs[]>([
     placeholder: '确认密码',
     pattern: '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[^]{8,16}$',
     refDom: 'confirmDOM',
-    value: '123abcABC'
+    value: ''
   },
   {
     type: 'text',

@@ -4,7 +4,7 @@
       <div class="food-name">{{foodName}}</div>
       <div class="food-price">
         <span>价格</span>
-        <span>￥{{foodPrice * foodData.foodCount}}</span>
+        <span>￥{{Math.round(foodPrice * foodData.foodCount * 10) / 10}}</span>
       </div>
       <div class="food-package">
         <span>是否打包</span>
