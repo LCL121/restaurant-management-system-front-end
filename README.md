@@ -1,6 +1,6 @@
 # 项目简介
 
-基于Vue3.0全家桶+Sass预处理器+TypeScript，使用了Node代理及Mock模拟进行前端开发，目前实现了一个食堂管理系统的学生系统部分。
+基于Vue3.0全家桶+Sass预处理器+TypeScript，使用了Node代理及Mock模拟进行前端开发，目前实现了一个食堂管理系统的学生系统部分（目前只实现了移动端版本）。
 
 项目展示地址：<a href="http://rms.leichenlong.com/" target="_blank">http://rms.leichenlong.com/</a>
 
